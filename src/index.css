@@ -12,3 +12,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.home{
+  height: 100vh;
+  width: 100vw;
+  background: rgb(42,36,133);
+  background: linear-gradient(143deg, rgba(42,36,133,0.8631652490097601) 0%, rgba(37,37,195,0.944397742006959) 43%, rgba(21,200,236,1) 96%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-header img{
+  height: 42px;
+}
+
+.home-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-header span{
+  font-size: 42px;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+.home-intro{
+  margin: 1.5rem 0 1rem 0;
+  font-size: 18px;
+  font-weight: 500;
+}
