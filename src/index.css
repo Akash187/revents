@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #fff4f0;
 }
 
 code {
@@ -45,4 +46,14 @@ code {
   margin: 1.5rem 0 1rem 0;
   font-size: 18px;
   font-weight: 500;
+}
+
+.navbar{
+  color: white !important;
+  background: rgb(42,36,133) !important;
+  background: linear-gradient(143deg, rgba(42,36,133,0.8631652490097601) 0%, rgba(37,37,195,0.944397742006959) 43%, rgba(21,200,236,1) 96%) !important;
+}
+
+.navbar-title{
+  margin-left: 0.5rem;
 }
