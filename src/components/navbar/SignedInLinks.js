@@ -1,20 +1,24 @@
 import React, { Fragment } from 'react';
-import {Button, Image, Menu, Dropdown} from 'semantic-ui-react';
+import {Button, Image, Menu, Dropdown, Header} from 'semantic-ui-react';
 import user from '../../assets/user.png';
 
 const SignedInLinks = () => {
   return (
     <Fragment>
       <Menu.Item>
-        People
+        <Header as='h5' inverted>
+          People
+        </Header>
       </Menu.Item>
       <Menu.Item>
-        <Button inverted positive>Create Event</Button>
+        <Header as='h5' inverted>
+          <Button inverted positive>Create Event</Button>
+        </Header>
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
           <Image circular size='mini' src={user} alt="logo"/>
-          <Dropdown text='Random' pointing className='link item'>
+          <Dropdown text='Random' pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
               <Dropdown.Item icon='plus' text='Create Event'/>
               <Dropdown.Item icon='calendar alternate' text='My Event'/>

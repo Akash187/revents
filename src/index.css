@@ -57,3 +57,7 @@ code {
 .navbar-title{
   margin-left: 0.5rem;
 }
+
+.navbar-dropdown{
+  font-size: 14px;
+}

@@ -1,19 +1,23 @@
 import React, { Fragment } from 'react';
-import {Button, Menu} from 'semantic-ui-react';
+import { Button, Menu, Header } from 'semantic-ui-react';
 
 const SignedOutLinks = () => {
   return (
     <Fragment>
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Button basic inverted>
-            Login
-          </Button>
+          <Header as='h5' inverted>
+            <Button basic inverted>
+              Login
+            </Button>
+          </Header>
         </Menu.Item>
         <Menu.Item>
-          <Button basic inverted>
-            Register
-          </Button>
+          <Header as='h5' inverted>
+            <Button basic inverted>
+              Register
+            </Button>
+          </Header>
         </Menu.Item>
       </Menu.Menu>
     </Fragment>
