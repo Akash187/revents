@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from '../../assets/logo.png';
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react';
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div className="home">
       <div className="home-header">
@@ -10,7 +10,7 @@ const Home = () => {
         <span>Re-vents</span>
       </div>
       <div className="home-intro">Do whatever you want to do</div>
-      <Button inverted size='large'>Get Started <Icon name='arrow right'/></Button>
+      <Button inverted size='large' onClick={() => {props.history.push('/dashboard')}}>Get Started <Icon name='arrow right'/></Button>
     </div>
   );
 };

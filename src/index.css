@@ -61,3 +61,7 @@ code {
 .navbar-dropdown{
   font-size: 14px;
 }
+
+.content{
+  padding-top: 6rem;
+}

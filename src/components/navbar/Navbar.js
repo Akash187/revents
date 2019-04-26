@@ -2,6 +2,7 @@ import React from 'react';
 import SignedOutLinks from './SignedOutLinks';
 import SignedInLinks from './SignedInLinks';
 import { Menu, Container, Header } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 const Navbar = () => {
@@ -9,15 +10,19 @@ const Navbar = () => {
     <Menu size='mini' fixed='top' className="navbar" inverted>
       <Container>
         <Menu.Item>
-          <Header as='h4' inverted>
-          <img src={logo} alt="logo"/>
-          <span className="navbar-title">Re-vents</span>
-          </Header>
+          <NavLink exact to='/'>
+            <Header as='h4' inverted>
+              <img src={logo} alt="logo"/>
+              <span className="navbar-title">Re-vents</span>
+            </Header>
+          </NavLink>
         </Menu.Item>
         <Menu.Item>
-          <Header as='h5' inverted>
-            Events
-          </Header>
+          <NavLink to='/dashboard'>
+            <Header as='h5' inverted>
+              Events
+            </Header>
+          </NavLink>
         </Menu.Item>
         {/*<SignedOutLinks/>*/}
         <SignedInLinks/>
