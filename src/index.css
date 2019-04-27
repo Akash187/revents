@@ -69,3 +69,9 @@ code {
 .people-coming-list{
   background: #eee8df !important;
 }
+
+.notification{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 6rem;
+}

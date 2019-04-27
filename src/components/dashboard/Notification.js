@@ -1,11 +1,12 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { Card, Feed } from 'semantic-ui-react';
 import user from '../../assets/user.png';
 import { Link } from 'react-router-dom';
 
 const Notification = () => {
+
   return (
-    <Fragment>
+    <div className='notification'>
       <Card fluid>
         <Card.Content>
           <Card.Header>Recent Activity</Card.Header>
@@ -50,7 +51,7 @@ const Notification = () => {
           </Feed>
         </Card.Content>
       </Card>
-    </Fragment>
+    </div>
   );
 };
 

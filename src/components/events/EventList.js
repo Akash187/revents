@@ -5,6 +5,7 @@ const EventList = () => {
   return (
     <div>
       <Event/>
+      <Event/>
     </div>
   );
 };
