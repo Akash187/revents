@@ -10,7 +10,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
         return (
           <Fragment>
           <Navbar/>
-            <Container className='content'>
+            <Container className='project-content'>
               <Component {...props}/>
             </Container>
         </Fragment>

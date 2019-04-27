@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fff4f0;
+  background: #eee8df;
 }
 
 code {
@@ -62,6 +62,10 @@ code {
   font-size: 14px;
 }
 
-.content{
+.project-content{
   padding-top: 6rem;
+}
+
+.people-coming-list{
+  background: #eee8df !important;
 }
