@@ -24,8 +24,8 @@ const Navbar = () => {
             </Header>
           </NavLink>
         </Menu.Item>
-        {/*<SignedOutLinks/>*/}
-        <SignedInLinks/>
+        <SignedOutLinks/>
+        {/*<SignedInLinks/>*/}
       </Container>
     </Menu>
   );
