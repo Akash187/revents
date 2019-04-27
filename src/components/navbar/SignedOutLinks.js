@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { Button, Menu, Header } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import Login from "../auth/Login";
+import Register from "../auth/Register";
 
 const SignedOutLinks = () => {
   return (
@@ -10,11 +11,7 @@ const SignedOutLinks = () => {
           <Login/>
         </Menu.Item>
         <Menu.Item>
-          <Header as='h5' inverted>
-            <Button basic inverted>
-              Register
-            </Button>
-          </Header>
+          <Register/>
         </Menu.Item>
       </Menu.Menu>
     </Fragment>
