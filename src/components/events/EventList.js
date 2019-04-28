@@ -6,6 +6,9 @@ const EventList = () => {
     <div>
       <Event/>
       <Event/>
+      <Event/>
+      <Event/>
+      <Event/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Grid, Image, Header, Icon, Button } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
+import LazyLoad from 'react-lazyload';
 
 const Event = () => {
   return (
@@ -8,7 +9,9 @@ const Event = () => {
       <Card.Content>
         <Grid columns={2}>
           <Grid.Column width={3}>
-            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='small' circular />
+            <LazyLoad>
+              <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='small' circular />
+            </LazyLoad>
           </Grid.Column>
           <Grid.Column width={13}>
             <Header>My Demo Event</Header>
