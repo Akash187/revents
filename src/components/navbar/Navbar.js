@@ -3,7 +3,6 @@ import SignedOutLinks from './SignedOutLinks';
 import SignedInLinks from './SignedInLinks';
 import { Menu, Container, Header } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import logo from '../../assets/logo.png';
 
 const Navbar = () => {
   return (
@@ -12,7 +11,7 @@ const Navbar = () => {
         <Menu.Item>
           <NavLink exact to='/'>
             <Header as='h4' inverted>
-              <img src={logo} alt="logo"/>
+              <img src='/assets/logo.png' alt="logo"/>
               <span className="navbar-title">Re-vents</span>
             </Header>
           </NavLink>
@@ -24,8 +23,8 @@ const Navbar = () => {
             </Header>
           </NavLink>
         </Menu.Item>
-        <SignedOutLinks/>
-        {/*<SignedInLinks/>*/}
+        {/*<SignedOutLinks/>*/}
+        <SignedInLinks/>
       </Container>
     </Menu>
   );

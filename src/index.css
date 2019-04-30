@@ -51,7 +51,7 @@ code {
 .navbar{
   color: white !important;
   background: rgb(42,36,133) !important;
-  background: linear-gradient(143deg, rgba(42,36,133,0.8631652490097601) 0%, rgba(37,37,195,0.944397742006959) 43%, rgba(21,200,236,1) 96%) !important;
+  background: linear-gradient(143deg, rgba(42,36,133,1) 0%, rgba(37,37,195,1) 43%, rgba(21,200,236,1) 96%) !important;
 }
 
 .navbar-title{
@@ -74,4 +74,26 @@ code {
   position: -webkit-sticky;
   position: sticky;
   top: 6rem;
+}
+
+.attendee{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.eventInfo-head{
+  height: 56vmin;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 6vmin 8vmin;
+}
+
+.centerElement{
+  display: flex !important;
+  align-items: center !important;
 }

@@ -3,7 +3,7 @@ import { Card, Grid, Image, Header, Icon, Button } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import LazyLoad from 'react-lazyload';
 
-const Event = () => {
+const Event = (props) => {
   return (
     <Card fluid>
       <Card.Content>
@@ -41,7 +41,9 @@ const Event = () => {
             </p>
           </Grid.Column>
           <Grid.Column width={3} floated='right' verticalAlign='bottom'>
-            <Button color='teal'>View</Button>
+            <Link to='/event/123'>
+              <Button color='teal'>View</Button>
+            </Link>
           </Grid.Column>
         </Grid>
       </Card.Content>

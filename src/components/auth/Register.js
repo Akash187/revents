@@ -42,7 +42,7 @@ const Register = () => {
               <Form.Field>
                 <input type="password" value={password} id="password" placeholder="Password" pattern="[a-zA-Z0-9~!@#$%^&*]{6,}" title="Password must be atleast 6 characters. May contain letters, number or special characters." onChange={handleChange} required/>
               </Form.Field>
-              <Button positive fluid>Login</Button>
+              <Button color='blue' fluid>Register</Button>
             </Form>
             <Divider horizontal>Or</Divider>
             <Button color='facebook' fluid>

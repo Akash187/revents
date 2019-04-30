@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import {Button, Image, Menu, Dropdown, Header} from 'semantic-ui-react';
-import user from '../../assets/user.png';
 
 const SignedInLinks = () => {
   return (
@@ -17,7 +16,7 @@ const SignedInLinks = () => {
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Image circular size='mini' src={user} alt="logo"/>
+          <Image circular size='mini' src='/assets/user.png' alt="logo"/>
           <Dropdown text='Random' pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
               <Dropdown.Item icon='plus' text='Create Event'/>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Feed } from 'semantic-ui-react';
-import user from '../../assets/user.png';
 import { Link } from 'react-router-dom';
 
 const Notification = () => {
@@ -14,7 +13,7 @@ const Notification = () => {
         <Card.Content>
           <Feed size='large'>
             <Feed.Event>
-              <Feed.Label image={user} />
+              <Feed.Label image='/assets/user.png' />
               <Feed.Content>
                 <Feed.Summary>
                   You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
@@ -26,7 +25,7 @@ const Notification = () => {
             </Feed.Event>
 
             <Feed.Event>
-              <Feed.Label image={user} />
+              <Feed.Label image='/assets/user.png' />
               <Feed.Content>
                 <Feed.Summary>
                   You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
@@ -38,7 +37,7 @@ const Notification = () => {
             </Feed.Event>
 
             <Feed.Event>
-              <Feed.Label image={user} />
+              <Feed.Label image='/assets/user.png' />
               <Feed.Content>
                 <Feed.Summary>
                   You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
