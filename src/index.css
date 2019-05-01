@@ -128,21 +128,22 @@ code {
   text-transform: capitalize;
 }
 
-.user-event{
+.user-event, .person{
   max-width: 180px !important;
+  color: black;
 }
 
-.user-event-title{
+.user-event-title, .person-title{
   text-align: center;
 }
 
-.user-event-date{
+.user-event-date, .person-address{
   font-weight: bold;
   opacity: 0.3;
   text-align: center;
 }
 
-.user-event-list{
+.user-event-list, .following-list, .followers-list{
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
   grid-gap: 1rem;

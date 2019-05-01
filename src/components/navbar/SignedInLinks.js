@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react';
 import {Button, Image, Menu, Dropdown, Header} from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 
 const SignedInLinks = (props) => {
   return (
     <Fragment>
       <Menu.Item>
-        <Header as='h5' inverted>
-          People
-        </Header>
+        <NavLink to='/people/123'>
+          <Header as='h5' inverted>
+            People
+          </Header>
+        </NavLink>
       </Menu.Item>
       <Menu.Item>
         <Header as='h5' inverted>

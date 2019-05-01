@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <Menu size='mini' fixed='top' className="navbar" inverted>
+    <Menu size='tiny' fixed='top' className="navbar" inverted>
       <Container>
         <Menu.Item>
           <NavLink exact to='/'>

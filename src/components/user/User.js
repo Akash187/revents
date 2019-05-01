@@ -4,10 +4,12 @@ import { Grid, Button, Card } from 'semantic-ui-react';
 import UserMoreInfo from "./UserMoreInfo";
 import UserPhotos from "./UserPhotos";
 import UserEvents from "./UserEvents";
+import DynamicScrollToTop from "../../routes/DynamicScrollToTop";
 
 const User = () => {
   return (
     <div>
+      <DynamicScrollToTop/>
       <UserInfoHeader/>
       <Grid coloumns={2}>
         <Grid.Column mobile={16} tablet={12} computer={12}>
