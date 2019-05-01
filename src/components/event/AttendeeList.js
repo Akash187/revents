@@ -38,20 +38,3 @@ const AttendeeList = () => {
 };
 
 export default AttendeeList;
-
-{/*<Segment style={{ margin: 0 }}>*/}
-  {/*<div className="attendee">*/}
-    {/*<Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='tiny'/>*/}
-    {/*<Link to='/'>*/}
-      {/*<Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>Clark</Header>*/}
-    {/*</Link>*/}
-  {/*</div>*/}
-{/*</Segment>*/}
-{/*<Segment style={{ margin: 0 }}>*/}
-{/*<div className="attendee">*/}
-  {/*<Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='tiny'/>*/}
-  {/*<Link to='/'>*/}
-{/*<Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>Clark</Header>*/}
-{/*</Link>*/}
-{/*</div>*/}
-{/*</Segment>*/}

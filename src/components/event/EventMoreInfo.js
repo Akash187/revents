@@ -1,5 +1,5 @@
 import React, {lazy, Suspense, useState} from 'react';
-import {Card, Segment, Grid, Icon, Button, Accordion, Dimmer, Loader} from 'semantic-ui-react';
+import {Card, Segment, Grid, Icon, Button, Dimmer, Loader} from 'semantic-ui-react';
 const MapContainer = lazy(() => import("./MapContainer"));
 
 const EventMoreInfo = () => {

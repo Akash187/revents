@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import {Button, Image, Menu, Dropdown, Header} from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
-const SignedInLinks = () => {
+const SignedInLinks = (props) => {
   return (
     <Fragment>
       <Menu.Item>
@@ -22,7 +23,7 @@ const SignedInLinks = () => {
               <Dropdown.Item icon='plus' text='Create Event'/>
               <Dropdown.Item icon='calendar alternate' text='My Event'/>
               <Dropdown.Item icon='users' text='My Community'/>
-              <Dropdown.Item icon='user' text='My Profile'/>
+              <Dropdown.Item icon='user' text='My Profile' onClick={() => props.history.push('/user/123')}/>
               <Dropdown.Item icon='settings' text='Setting'/>
               <Dropdown.Item icon='power' text='Logout'/>
             </Dropdown.Menu>
@@ -33,4 +34,4 @@ const SignedInLinks = () => {
   );
 };
 
-export default SignedInLinks;
+export default withRouter(SignedInLinks);
