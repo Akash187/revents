@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useState} from 'react';
+import React, {lazy, Suspense, useState } from 'react';
 import {Card, Segment, Grid, Icon, Button, Dimmer, Loader} from 'semantic-ui-react';
 const MapContainer = lazy(() => import("./MapContainer"));
 
@@ -48,7 +48,7 @@ const EventMoreInfo = () => {
           <Suspense fallback={<Dimmer active>
             <Loader />
           </Dimmer>}>
-            <MapContainer/>
+            <MapContainer latLng={{ lat: 51.5321845, lng: -0.12392169999998259}} venue={'The Harry Potter Shop at Platform 9 3/4, Pancras Road, London, UK'}/>
           </Suspense>
         </Segment>}
       </Card>

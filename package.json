@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "formik": "^1.5.4",
     "google-maps-react": "^2.0.2",
     "history": "^4.9.0",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
+    "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.6",
     "react-infinite-scroller": "^1.2.4",
     "react-lazyload": "^2.5.0",
+    "react-places-autocomplete": "^7.2.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

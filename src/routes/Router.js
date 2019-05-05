@@ -7,6 +7,7 @@ import EventDetail from "../components/event/EventDetail";
 import User from "../components/user/User";
 import ProtectedRoute from "./ProtectedRoute";
 import People from "../components/people/People";
+import CreateEvent from "../components/event/CreateEvent";
 
 const Router = () => {
   return(
@@ -18,6 +19,7 @@ const Router = () => {
           <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
           <ProtectedRoute exact path='/user/:id' component={ User } />
           <ProtectedRoute exact path='/people/:id' component={ People } />
+          <ProtectedRoute exact path='/createEvent' component={ CreateEvent } />
           <Route path="*" render = {() => <Redirect to="/" />}/>
         </Switch>
       </div>

@@ -149,5 +149,26 @@ code {
   grid-gap: 1rem;
 }
 
+.autocomplete-dropdown-container{
+  border: 1px solid black;
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}
+
+.autocomplete-dropdown-container span{
+  font-size: 16px;
+  padding-top: 20px !important;
+}
+
+.react-datepicker-wrapper{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.react-datepicker__input-container{
+    width: 100%;
+}
+
 
 

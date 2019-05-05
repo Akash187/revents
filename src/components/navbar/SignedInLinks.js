@@ -14,7 +14,7 @@ const SignedInLinks = (props) => {
       </Menu.Item>
       <Menu.Item>
         <Header as='h5' inverted>
-          <Button inverted positive>Create Event</Button>
+          <Button inverted positive onClick={() => props.history.push('/createEvent')}>Create Event</Button>
         </Header>
       </Menu.Item>
       <Menu.Menu position='right'>
