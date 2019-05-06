@@ -25,7 +25,6 @@ const EventDatePicker = ({ setFieldValue, values, errors, touched }) => {
     <div>
       <DatePicker
         selected={startDate}
-        excludeOutOfBoundsTimes
         onChange={updateDateTime}
         minDate={new Date()}
         placeholderText="Date and Time of Event"

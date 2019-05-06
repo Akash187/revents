@@ -4,9 +4,9 @@ import { withFormik } from 'formik';
 import {object, string, number} from 'yup';
 
 
-const CreateEvent = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting, setFieldTouched }) => {
+const CreateEvent = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
   return (
-    <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } setFieldTouched={setFieldTouched} isSubmitting={ isSubmitting }/>
+    <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } isSubmitting={ isSubmitting }/>
   );
 };
 
@@ -37,8 +37,8 @@ export default withFormik({
     latLng: string(),
     dateTime: number().required('Required')
   }),
-  handleSubmit(values, { resetForm, setErrors, setSubmitting }){
-    setTimeout(() => {
+  handleSubmit(values, { setSubmitting }){
+      setTimeout(() => {
       console.log(values);
       setSubmitting(false);
     }, 3000);

@@ -26,7 +26,7 @@ const SignedInLinks = (props) => {
               <Dropdown.Item icon='calendar alternate' text='My Event'/>
               <Dropdown.Item icon='users' text='My Community'/>
               <Dropdown.Item icon='user' text='My Profile' onClick={() => props.history.push('/user/123')}/>
-              <Dropdown.Item icon='settings' text='Setting'/>
+              <Dropdown.Item icon='settings' text='Setting' onClick={() => props.history.push('/settings/basic')}/>
               <Dropdown.Item icon='power' text='Logout'/>
             </Dropdown.Menu>
           </Dropdown>

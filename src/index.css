@@ -166,9 +166,18 @@ code {
     margin-bottom: 1rem;
 }
 
+.react-datepicker-popper{
+  z-index: 999;
+  margin-top: 20px;
+}
+
 .react-datepicker__input-container{
     width: 100%;
 }
 
+.setting-header{
+  padding: 1rem 1rem 0 1rem;
+  margin-bottom: 0;
+}
 
 

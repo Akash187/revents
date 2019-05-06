@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Card, Form, Header, Button, Message } from 'semantic-ui-react';
 import EventFormLocation from './EventFormLocation';
 import EventDatePicker from "./EventDatePicker";
+import { Link } from 'react-router-dom';
 
 const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting }) => {
 
@@ -42,7 +43,7 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
               <EventFormLocation values={values} touched={touched} errors={errors} setFieldValue={setFieldValue}/>
               <EventDatePicker touched={touched} values={values} errors={errors} setFieldValue={setFieldValue}/>
               <Button type='submit' positive loading={isSubmitting}>Submit</Button>
-              <Button>Cancel</Button>
+              <Link to='/dashboard'><Button>Cancel</Button></Link>
             </Form>
           </Card.Content>
         </Card>

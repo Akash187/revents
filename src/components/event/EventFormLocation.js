@@ -23,9 +23,9 @@ export default class EventFormLocation extends React.Component {
 
   handleSelectCity = city => {
     this.setState({city});
+    this.props.setFieldValue('city', city);
     geocodeByAddress(city)
       .then(results => {
-        this.props.setFieldValue('city', results[0].formatted_address);
         return getLatLng(results[0])
       })
       .then(latLng => {
@@ -33,7 +33,7 @@ export default class EventFormLocation extends React.Component {
           cityLatLng: latLng,
           searchOptions: {
             location: new window.google.maps.LatLng(latLng.lat, latLng.lng),
-            radius: 5000,
+            radius: 1000,
             types: []
           }});
       })
