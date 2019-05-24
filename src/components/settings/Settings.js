@@ -5,7 +5,6 @@ import AboutMeSetting from "./AboutMeSetting";
 import PhotosSetting from "./PhotosSetting";
 import AccountSetting from "./AccountSetting";
 import { withRouter, Route } from 'react-router-dom';
-import ProtectedRoute from "../../routes/ProtectedRoute";
 
 const Settings = (props) => {
 
