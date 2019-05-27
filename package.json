@@ -6,6 +6,7 @@
     "firebase": "^6.0.4",
     "formik": "^1.5.4",
     "google-maps-react": "^2.0.2",
+    "history": "^4.9.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-cropper": "^1.2.0",

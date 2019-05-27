@@ -9,25 +9,20 @@ import ProtectedRoute from "./ProtectedRoute";
 import People from "../components/people/People";
 import CreateEvent from "../components/event/CreateEvent";
 import Settings from "../components/settings/Settings";
-import BasicSetting from "../components/settings/BasicSetting";
-import AboutMeSetting from "../components/settings/AboutMeSetting";
-import PhotosSetting from "../components/settings/PhotosSetting";
 
 const Router = (props) => {
   return(
     <BrowserRouter>
-      <div>
-        <Switch>
-          <Route exact path='/' component={ Home }/>
-          <NotProtectedRoute exact path='/dashboard' component={ Dashboard} />
-          <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
-          <ProtectedRoute exact path='/user/:id' component={ User } />
-          <ProtectedRoute exact path='/people/:id' component={ People } />
-          <ProtectedRoute exact path='/createEvent' component={ CreateEvent } />
-          <ProtectedRoute path='/settings' component={ Settings } />
-          <Route path="*" render = {() => <Redirect to="/" />}/>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path='/' component={ Home }/>
+        <NotProtectedRoute exact path='/dashboard' component={ Dashboard} />
+        <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
+        <ProtectedRoute exact path='/user/:id' component={ User } />
+        <ProtectedRoute exact path='/people/:id' component={ People } />
+        <ProtectedRoute exact path='/createEvent' component={ CreateEvent } />
+        <ProtectedRoute path='/settings' component={ Settings } />
+        <Route path="*" render = {() => <Redirect to="/" />}/>
+      </Switch>
     </BrowserRouter>
   )
 };

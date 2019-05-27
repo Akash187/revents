@@ -4,7 +4,7 @@ const initState = {
 
 const eventReducer = (state = initState, action) => {
   switch(action.type){
-    case 'ADD_CLIENT':
+    case 'ADD_EVENT':
       return{
         ...state,
         err: null

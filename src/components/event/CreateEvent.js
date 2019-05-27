@@ -1,15 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import EventForm from "./EventForm";
 import { withFormik } from 'formik';
 import {object, string, date} from 'yup';
 import { connect } from 'react-redux';
 import { addEvent } from "../../store/actions/eventActions";
 
+const CreateEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
 
-const CreateEvent = ({addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
+  useEffect(() => {
+    if(success){
+      history.push('/dashboard');
+    }
+  }, [success]);
+
   return (
     <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } isSubmitting={ isSubmitting }/>
   );
+};
+
+const mapStateToProps = ({ event: {err}, form: {success}}) => {
+  return{
+    err,
+    success
+  }
 };
 
 const mapDispatchToProps = dispatch => {
@@ -18,7 +31,7 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(withFormik({
+export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
   mapPropsToValues(){
     return{
       name: '',

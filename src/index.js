@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //semantic-ui-css
 import 'semantic-ui-css/semantic.css';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,6 +12,7 @@ import { createFirestoreInstance} from 'redux-firestore';
 import { firebase } from './config/fbConfig';
 import rootReducer from "./store/reducers/rootReducer";
 import {applyMiddleware, compose, createStore} from "redux";
+import ReduxToastr from 'react-redux-toastr';
 import thunk from "redux-thunk";
 
 // react-redux-firebase config
@@ -32,7 +34,19 @@ const rrfProps = {
   createFirestoreInstance // <- needed if using firestore
 };
 
-ReactDOM.render(<Provider store={store}><ReactReduxFirebaseProvider {...rrfProps}><App /></ReactReduxFirebaseProvider></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider
+  store={store}>
+  <ReactReduxFirebaseProvider {...rrfProps}><App /></ReactReduxFirebaseProvider>
+  <ReduxToastr
+    timeOut={4000}
+    newestOnTop={false}
+    preventDuplicates
+    position="bottom-right"
+    transitionIn="fadeIn"
+    transitionOut="fadeOut"
+    progressBar
+    closeOnToastrClick/>
+</Provider>, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change
