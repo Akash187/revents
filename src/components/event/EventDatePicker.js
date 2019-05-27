@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import moment from 'moment';
+// import moment from 'moment';
 import { Message } from 'semantic-ui-react';
 
 const EventDatePicker = ({ setFieldValue, values, errors, touched }) => {
@@ -14,8 +14,7 @@ const EventDatePicker = ({ setFieldValue, values, errors, touched }) => {
 
   const updateDateTime = date => {
     setDate(date);
-    let timeStamp = moment(date).valueOf();
-    setFieldValue('dateTime', timeStamp);
+    setFieldValue('dateTime', date);
     // console.log(unix);
     // let dateTime = moment(unix).format('MMMM Do YYYY, h:mm:ss a');
     // console.log(dateTime);

@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
 import { Card, Header, Button } from 'semantic-ui-react';
+import moment from 'moment';
 
-const EventInfoHeader = () => {
+const EventInfoHeader = ({name, about, dateTime}) => {
 
   const [loading, setLoading] = useState(false);
   const [joined, setJoined] = useState(true);
 
   return (
     <Card fluid>
-      <div className='eventInfo-head' style ={ { backgroundImage: `url('/assets/categoryImages/drinks.jpg')`} }>
+      <div className='eventInfo-head' style ={ { backgroundImage: `url('/assets/categoryImages/${about}.jpg')`} }>
         <Header
           inverted
           as = 'h1'
-          content={`Clarkes event`}
-          subheader= {`Friday 27th April`}/>
+          content={name}
+          subheader= {moment(dateTime*1000).format('dddd Do MMMM')}/>
         <Header.Subheader
           content={`Hosted by Clark`}
         />

@@ -3,12 +3,12 @@ import EventMoreInfo from "./EventMoreInfo";
 import EventComment from "./EventComment";
 import EventInfoHeader from './EventInfoHeader';
 
-const EventInfo = () => {
+const EventInfo = ({event}) => {
 
   return (
     <div>
-      <EventInfoHeader/>
-      <EventMoreInfo/>
+      <EventInfoHeader name={event.name} dateTime={event.dateTime.seconds} about={event.about}/>
+      <EventMoreInfo detail={event.detail} venue={event.venue} dateTime={event.dateTime.seconds} latLng={event.latLng}/>
       <EventComment/>
     </div>
   );

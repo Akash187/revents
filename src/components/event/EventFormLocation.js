@@ -6,10 +6,11 @@ import PlacesAutocomplete, {
 import {Message} from "semantic-ui-react";
 
 export default class EventFormLocation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { city: this.props.values.city, cityLatLng:{Lat: '', Lng: ''},  venue: this.props.values.venue};
-  }
+  state = {
+    city: this.props.values.city,
+    cityLatLng:{Lat: '', Lng: ''},
+    venue: this.props.values.venue
+  };
 
   handleChangeCity = city => {
     this.setState({ city });
@@ -26,6 +27,7 @@ export default class EventFormLocation extends React.Component {
     this.props.setFieldValue('city', city);
     geocodeByAddress(city)
       .then(results => {
+        console.log(getLatLng(results[0]));
         return getLatLng(results[0])
       })
       .then(latLng => {

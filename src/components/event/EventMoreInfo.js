@@ -1,8 +1,9 @@
 import React, {lazy, Suspense, useState } from 'react';
 import {Card, Segment, Grid, Icon, Button, Dimmer, Loader} from 'semantic-ui-react';
+import moment from 'moment';
 const MapContainer = lazy(() => import("./MapContainer"));
 
-const EventMoreInfo = () => {
+const EventMoreInfo = ({detail, dateTime, venue, latLng}) => {
 
   const [showMap, setShowMap] = useState(false);
 
@@ -16,7 +17,7 @@ const EventMoreInfo = () => {
                 <Icon color='teal' name='info' size='large'/>
               </Grid.Column>
               <Grid.Column width={15} className='centerElement'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus.
+                {detail}
               </Grid.Column>
             </Grid>
           </Segment>
@@ -26,7 +27,7 @@ const EventMoreInfo = () => {
                 <Icon color='teal' name='calendar alternate outline' size='large'/>
               </Grid.Column>
               <Grid.Column width={15} className='centerElement'>
-                Friday 27th Apr at 4:00 PM
+                {moment(dateTime*1000).format('dddd Do MMMM')} at {moment(dateTime*1000).format('LT')}
               </Grid.Column>
             </Grid>
           </Segment>
@@ -36,7 +37,7 @@ const EventMoreInfo = () => {
                 <Icon color='teal' name='map marker alternate' size='large'/>
               </Grid.Column>
               <Grid.Column width={11} className='centerElement'>
-                Stuttgart Airport (STR), Flughafenstraße, Stuttgart, Germany
+                {venue}
               </Grid.Column>
               <Grid.Column width={4}>
                 <Button color='teal' onClick={() => setShowMap(!showMap)} floated='right'>Show Map</Button>
@@ -48,7 +49,7 @@ const EventMoreInfo = () => {
           <Suspense fallback={<Dimmer active>
             <Loader />
           </Dimmer>}>
-            <MapContainer latLng={{ lat: 51.5321845, lng: -0.12392169999998259}} venue={'The Harry Potter Shop at Platform 9 3/4, Pancras Road, London, UK'}/>
+            <MapContainer latLng={latLng} venue={venue}/>
           </Suspense>
         </Segment>}
       </Card>

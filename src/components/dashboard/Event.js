@@ -2,8 +2,9 @@ import React from 'react';
 import { Card, Grid, Image, Header, Icon, Button } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import LazyLoad from 'react-lazyload';
+import moment from 'moment';
 
-const Event = (props) => {
+const Event = ({event}) => {
   return (
     <Card fluid>
       <Card.Content>
@@ -14,16 +15,16 @@ const Event = (props) => {
             </LazyLoad>
           </Grid.Column>
           <Grid.Column width={13}>
-            <Header>My Demo Event</Header>
+            <Header>{event.name}</Header>
             <Header.Subheader>Hosted by <Link to='/'>Clark</Link></Header.Subheader>
           </Grid.Column>
         </Grid>
       </Card.Content>
       <Card.Content>
         <Header as='h4'>
-          <span><Icon fitted name='clock outline'/>{' '} Saturday 28th April at 09:30</span>
+          <span><Icon fitted name='clock outline'/>{' '} {moment(event.dateTime.seconds*1000).format('dddd Do MMMM')} at {moment(event.dateTime.seconds*1000).format('HH:mm')}</span>
           <span> | </span>
-          <span><Icon fitted name='map marker alternate'/>{' '} The Wolseley, Piccadilly, London, UK</span>
+          <span><Icon fitted name='map marker alternate'/>{' '} {event.venue}</span>
         </Header>
       </Card.Content>
       <Card.Content className='people-coming-list'>
@@ -37,11 +38,11 @@ const Event = (props) => {
         <Grid columns={2}>
           <Grid.Column width={13}>
             <p>
-              react-redux-toastr is a React toastr message implemented with Redux, primary consists of three things: a reducer, toastr emitter and a React component. The reducer listens to dispatched actions from the component to maintain the toastr state in Redux.
+              {event.detail}
             </p>
           </Grid.Column>
           <Grid.Column width={3} floated='right' verticalAlign='bottom'>
-            <Link to='/event/123'>
+            <Link to={`/event/${event.id}`}>
               <Button color='teal'>View</Button>
             </Link>
           </Grid.Column>
