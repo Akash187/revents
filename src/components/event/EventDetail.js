@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import EventInfo from "./EventInfo";
 import AttendeeList from "./AttendeeList";
 import { connect } from 'react-redux';
@@ -14,7 +14,9 @@ const EventDetail = ({event}) => {
       <DynamicScrollToTop/>
       <Grid>
         <Grid.Column mobile={16} computer={10}>
-          {event && <EventInfo event={event}/>}
+          {event ? <EventInfo event={event}/> :
+            <Loader active/>
+          }
         </Grid.Column>
         <Grid.Column mobile={16} computer={6}>
           <AttendeeList/>
