@@ -12,13 +12,13 @@ export const addEvent = (eventDetail) => {
         type: 'ADD_EVENT'
       });
       dispatch({
-        type: 'FORM_SUCCESS_ROUTE'
+        type: 'FORM_SUCCESS'
       });
       dispatch({
-        type: 'INITIALIZE_FORM_ROUTE'
+        type: 'INITIALIZE_FORM'
       });
     }).catch((err) => {
-      toastr.error('Failed to add Event.');
+      toastr.error('Failed to add Event.', err.message);
       dispatch({type: 'ADD_EVENT_ERROR',
       err: err.message})
     })

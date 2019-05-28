@@ -6,12 +6,12 @@ const initState = {
 
 const formReducer = (state = initState, action) => {
   switch(action.type){
-    case 'INITIALIZE_FORM_ROUTE':
+    case 'INITIALIZE_FORM':
       return{
         ...state,
         success: false
       };
-    case 'FORM_SUCCESS_ROUTE':
+    case 'FORM_SUCCESS':
       return{
         ...state,
         success: true

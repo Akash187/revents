@@ -59,7 +59,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     dateTime: date().required('Required')
   }),
   handleSubmit(values, { props, setSubmitting }){
-      props.addEvent(values);
+    props.addEvent(values);
+    setTimeout(() => {
       setSubmitting(false);
+    },3000);
   }
 })(CreateEvent));
