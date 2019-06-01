@@ -187,3 +187,39 @@ code {
 }
 
 
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
+
+.map-container .circle-marker {
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid #FFF;
+    background: #1275E8;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    border-radius: 100%;
+    z-index: 99999;
+}
+
+

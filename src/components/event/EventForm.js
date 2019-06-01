@@ -3,6 +3,7 @@ import { Grid, Card, Form, Header, Button, Message } from 'semantic-ui-react';
 import EventFormLocation from './EventFormLocation';
 import EventDatePicker from "./EventDatePicker";
 import { Link } from 'react-router-dom';
+import HereMapContainer from "./HereMapContainer";
 
 const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting }) => {
 
@@ -41,6 +42,7 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
                 header={errors.detail}/>}
               <Header color='teal' size='medium' content='EVENT LOCATION DETAILS'/>
               <EventFormLocation values={values} touched={touched} errors={errors} setFieldValue={setFieldValue}/>
+              <HereMapContainer/>
               <EventDatePicker touched={touched} values={values} errors={errors} setFieldValue={setFieldValue}/>
               <Button type='submit' positive loading={isSubmitting}>Submit</Button>
               <Link to='/dashboard'><Button>Cancel</Button></Link>
