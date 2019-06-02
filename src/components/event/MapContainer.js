@@ -6,14 +6,14 @@ class MapContainer extends React.Component {
   render() {
     return (
       <HEREMap
-        appId="41vHI9jzlfI9NfGkEzgw"
-        appCode="JX43Cz50wpoOLYBrxyD7yw"
+        appId={ process.env.REACT_APP_HERE_MAPS_APP_ID}
+        appCode={ process.env.REACT_APP_HERE_MAPS_APP_CODE}
         center={this.props.latLng}
         zoom={14}
         interactive
       >
         <Marker lat={this.props.latLng.lat} lng={this.props.latLng.lng} >
-          <div>Hello World</div>
+          <div className='circle-marker' />
         </Marker>
       </HEREMap>
     )
