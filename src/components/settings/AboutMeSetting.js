@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Form, Button, Message, Divider} from "semantic-ui-react";
 import { withFormik } from 'formik';
 import {object, string, array} from 'yup';
+import PlacesAutoComplete from "../layout/PlacesAutocomplete";
+
+const appId = process.env.REACT_APP_HERE_MAPS_APP_ID;
+const appCode = process.env.REACT_APP_HERE_MAPS_APP_CODE;
 
 const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
 
@@ -13,6 +17,39 @@ const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, erro
     {text: 'Music', value: 'music'},
     {text: 'Travel', value: 'travel'},
   ];
+
+  const [cityOptions, setCityOptions] = useState([]);
+  const [city, setCity] = useState('');
+  const [timeOut, setTimeOut] = useState(0);
+
+  const autoCompleteCity = query => {
+    if(timeOut) clearTimeout(timeOut);
+    setCity(query);
+    if(query.length > 2) {
+      setTimeOut(setTimeout(() => {
+        fetch(`http://autocomplete.geocoder.api.here.com/6.2/suggest.json?query=${query}&app_id=${appId}&app_code=${appCode}`)
+          .then(res => res.json())
+          .then(async res => {
+            let suggestedCities = res.suggestions.map((suggestion, index) => (
+              {id: `city${index}`, label: suggestion.label}
+            ));
+            setCityOptions(suggestedCities);
+          });
+      },500));
+    }else{
+      setTimeout(() => {
+        setCityOptions([]);
+      }, 1000);
+    }
+  };
+
+  const selectCity = async (city) => {
+    setCity(city);
+  };
+
+  useEffect(() => {
+    setFieldValue('birthPlace', city);
+  },[city]);
 
   return (
     <Card fluid>
@@ -62,9 +99,7 @@ const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, erro
             size='mini'
             negative
             header={errors.profession}/>}
-          <Form.Field>
-            <input placeholder='BirthPlace' name='birthPlace' value={values.birthPlace} onChange={handleChange}/>
-          </Form.Field>
+          <PlacesAutoComplete items={cityOptions} placeholder={'BirthPlace'} value={values.birthPlace} onChange={autoCompleteCity} onSelect={selectCity}/>
           {errors.birthPlace && touched.birthPlace && <Message
             size='mini'
             negative
