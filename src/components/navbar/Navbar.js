@@ -3,10 +3,13 @@ import SignedOutLinks from './SignedOutLinks';
 import SignedInLinks from './SignedInLinks';
 import { Menu, Container, Header } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { isLoaded } from 'react-redux-firebase';
 
-const Navbar = () => {
+const Navbar = ({ auth }) => {
+
   return (
-    <Menu size='tiny' fixed='top' className="navbar" inverted>
+    isLoaded(auth) ? <Menu size='tiny' fixed='top' className="navbar" inverted>
       <Container>
         <Menu.Item>
           <NavLink exact to='/'>
@@ -23,11 +26,16 @@ const Navbar = () => {
             </Header>
           </NavLink>
         </Menu.Item>
-        {/*<SignedOutLinks/>*/}
-        <SignedInLinks/>
+        { auth.uid ? <SignedInLinks/> : <SignedOutLinks/> }
       </Container>
-    </Menu>
+    </Menu> : <div/>
   );
 };
 
-export default Navbar;
+const mapStateToProps = ({firebase : {auth}}) => {
+  return{
+    auth
+  }
+};
+
+export default connect(mapStateToProps)( Navbar );

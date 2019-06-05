@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import { Modal, Card, Form, Button, Divider, Icon, Header } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { signIn} from "../../store/actions/authActions";
 
-const Login = () => {
+const Login = ({ signIn }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,9 +18,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({email, password});
-    //signIn({email, password});
-    //this.props.signUp(this.state);
+    signIn({email, password});
   };
 
   return (
@@ -55,4 +55,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return{
+    signIn: (credentials) => dispatch(signIn(credentials))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Login);
