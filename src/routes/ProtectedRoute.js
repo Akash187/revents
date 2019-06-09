@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { Container } from 'semantic-ui-react';
+import {Container, Dimmer, Loader} from 'semantic-ui-react';
 import Navbar from "../components/navbar/Navbar";
 import { connect } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
@@ -10,14 +10,22 @@ const ProtectedRoute = ({component: Component,auth, ...rest}) => {
   return (
     <Route {...rest} render={
       (props) => {
-        return (
-           (isLoaded(auth) && auth.uid) ? <Fragment>
-            <Navbar/>
-            <Container className='project-content'>
-              <Component {...props}/>
-            </Container>
-          </Fragment> : <Redirect to='/dashboard'/>
-        )
+        if(isLoaded(auth)){
+          if(auth.uid){
+            return <Fragment>
+              <Navbar/>
+              <Container className='project-content'>
+                <Component {...props}/>
+              </Container>
+            </Fragment>
+          }else{
+            return <Redirect to='/dashboard'/>
+          }
+        }else{
+          return <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+        }
       }
     }/>
   );

@@ -4,7 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = ({history, signOut}) => {
+const SignedInLinks = ({name, history, signOut}) => {
   return (
     <Fragment>
       <Menu.Item>
@@ -22,7 +22,7 @@ const SignedInLinks = ({history, signOut}) => {
       <Menu.Menu position='right'>
         <Menu.Item>
           <Image circular size='mini' src='/assets/user.png' alt="logo"/>
-          <Dropdown text='Random' pointing className='link item navbar-dropdown'>
+          <Dropdown text={ name || 'Random'} pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
               <Dropdown.Item icon='plus' text='Create Event'/>
               <Dropdown.Item icon='calendar alternate' text='My Event'/>
@@ -38,6 +38,12 @@ const SignedInLinks = ({history, signOut}) => {
   );
 };
 
+const mapStateToProps = ({firebase: { profile }}) => {
+  return{
+    name: profile.name
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return{
     signOut: () => dispatch(signOut())
@@ -45,4 +51,4 @@ const mapDispatchToProps = (dispatch) => {
 
 };
 
-export default connect( null, mapDispatchToProps )(withRouter(SignedInLinks));
+export default connect( mapStateToProps, mapDispatchToProps )(withRouter(SignedInLinks));

@@ -5,15 +5,16 @@ import {object, string, date} from 'yup';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import PlacesAutoComplete from "../layout/PlacesAutocomplete";
+import {connect} from "react-redux";
+import { basicProfile } from "../../store/actions/profileActions";
 
 const appId = process.env.REACT_APP_HERE_MAPS_APP_ID;
 const appCode = process.env.REACT_APP_HERE_MAPS_APP_CODE;
 
 const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
 
-  const [birthDate, setDate] = useState(values.birthDate);
   const [cityOptions, setCityOptions] = useState([]);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(values.address);
   const [timeOut, setTimeOut] = useState(0);
 
   const autoCompleteCity = query => {
@@ -45,18 +46,13 @@ const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors
     setFieldValue('address', city);
   },[city]);
 
-  const updateBirthDate = date => {
-    setDate(date);
-    setFieldValue('birthDate', date);
-  };
-
   return (
     <Card fluid>
       <Card.Header as='h1' className='setting-header'>Basics</Card.Header>
       <Card.Content>
         <Form onSubmit={handleSubmit}>
           <Form.Field>
-            <input placeholder='Name' name='name' value={values.name} onChange={handleChange}/>
+            <input placeholder='Name' name='name' type='text' value={values.name} onChange={handleChange}/>
           </Form.Field>
           {errors.name && touched.name && <Message
             size='mini'
@@ -81,18 +77,16 @@ const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors
             size='mini'
             negative
             header={errors.gender}/>}
-          <div>
-            <DatePicker
-              selected={birthDate}
-              maxDate={new Date(moment().subtract(18, 'y').format())}
-              onChange={updateBirthDate}
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              placeholderText="Date of Birth"
-              dateFormat="d, MMMM yyyy"
-            />
-          </div>
+          <DatePicker
+            selected={values.birthDate}
+            maxDate={new Date(moment().subtract(18, 'y').format())}
+            onChange={(date) => setFieldValue('birthDate', date)}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            placeholderText="Date of Birth"
+            dateFormat="d, MMMM yyyy"
+          />
           <PlacesAutoComplete items={cityOptions} placeholder={'Address'} value={values.address} onChange={autoCompleteCity} onSelect={selectCity}/>
           {errors.address && touched.address && <Message
             size='mini'
@@ -106,15 +100,30 @@ const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors
   );
 };
 
-export default withFormik({
-  mapPropsToValues(){
-    return{
-      name: '',
-      gender: 'male',
-      birthDate: new Date('Wed May 02 2001 00:00:00 GMT+0530 (India Standard Time)'),
-      address: ''
+const mapStateToProps = ({firebase: { profile }}) => {
+  return{
+    profile
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    basicProfile: (values) => dispatch(basicProfile(values))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
+  mapPropsToValues({ profile }){
+    if(profile.isLoaded){
+      return{
+        name: profile.name || '',
+        gender: profile.gender || 'male',
+        birthDate: new Date(profile.birthDate.seconds * 1000) || '',
+        address: profile.address ? profile.address : ''
+      }
     }
   },
+  enableReinitialize: true,
   validationSchema: object().shape({
     name: string().min(2, 'Too Short!')
       .max(50, 'Too Long!')
@@ -124,10 +133,10 @@ export default withFormik({
     address: string().min(5, 'Too Short!')
     .max(100, 'Too Long!')
   }),
-  handleSubmit(values, { setSubmitting }){
+  handleSubmit(values, {props, setSubmitting }){
+    props.basicProfile(values);
     setTimeout(() => {
-      console.log(values);
       setSubmitting(false);
-    }, 3000);
+    },2000);
   }
-})(BasicSetting);
+})(BasicSetting));

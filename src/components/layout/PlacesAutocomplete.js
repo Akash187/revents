@@ -23,7 +23,7 @@ const PlacesAutoComplete = ({items, placeholder, value, onChange, onSelect}) =>{
       <ReactAutocomplete
         wrapperStyle = {wrapperStyle}
         items={items}
-        inputProps={{ placeholder: placeholder }}
+        inputProps={{ placeholder: placeholder, type: 'text' }}
         menuStyle = {{...menuStyle, display : items.length > 0 ? 'block' : 'none'}}
         //shouldItemRender={(item, value) => item.label.indexOf(value.toLowerCase()) > -1}
         getItemValue={item => item.label}
