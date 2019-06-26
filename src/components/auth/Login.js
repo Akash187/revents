@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import { Modal, Card, Form, Button, Divider, Icon, Header } from 'semantic-ui-react';
+import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { signIn} from "../../store/actions/authActions";
 
-const Login = ({ signIn }) => {
+const Login = ({ signIn, trigger }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,11 +22,7 @@ const Login = ({ signIn }) => {
   };
 
   return (
-    <Modal size='mini' trigger={
-      <Header as='h5' inverted>
-        <Button basic inverted>Login</Button>
-      </Header>
-    }>
+    <Modal size='mini' trigger={trigger}>
       <Modal.Header as='h3'>Login to Re-vents</Modal.Header>
       <Modal.Content>
         <Card centered fluid>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Card, Form, Button, Divider, Icon, Header } from 'semantic-ui-react';
+import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { signUp } from "../../store/actions/authActions";
 import { withRouter } from "react-router-dom";
 
-const Register = ({history, success, signUp }) => {
+const Register = ({history, success, signUp, trigger }) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,11 +32,7 @@ const Register = ({history, success, signUp }) => {
   };
 
   return (
-    <Modal size='mini' trigger={
-      <Header as='h5' inverted>
-        <Button basic inverted>Register</Button>
-      </Header>
-    }>
+    <Modal size='mini' trigger={trigger}>
       <Modal.Header as='h3'>Register to Re-vents</Modal.Header>
       <Modal.Content>
         <Card centered fluid>

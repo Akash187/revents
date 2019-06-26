@@ -3,11 +3,13 @@ import {Card, Form, Button, Message, Divider} from "semantic-ui-react";
 import { withFormik } from 'formik';
 import {object, string, array} from 'yup';
 import PlacesAutoComplete from "../layout/PlacesAutocomplete";
+import {connect} from "react-redux";
+import { aboutMeProfile } from "../../store/actions/profileActions";
 
 const appId = process.env.REACT_APP_HERE_MAPS_APP_ID;
 const appCode = process.env.REACT_APP_HERE_MAPS_APP_CODE;
 
-const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
+const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
 
   const options = [
     {text: 'Culture', value: 'culture'},
@@ -19,7 +21,7 @@ const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, erro
   ];
 
   const [cityOptions, setCityOptions] = useState([]);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(values.birthPlace);
   const [timeOut, setTimeOut] = useState(0);
 
   const autoCompleteCity = query => {
@@ -105,23 +107,37 @@ const AboutMeSetting = ({values, handleChange, handleSubmit, setFieldValue, erro
             negative
             header={errors.birthPlace}/>}
           <Divider />
-          <Button positive type='submit' loading={isSubmitting}>Update Profile</Button>
+          <Button positive type='submit' loading={submitting}>Update Profile</Button>
         </Form>
       </Card.Content>
     </Card>
   );
 };
 
-export default withFormik({
-  mapPropsToValues(){
+const mapStateToProps = ({firebase: { profile }, form: {submitting}}) => {
+  return{
+    profile,
+    submitting
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    aboutMeProfile: (values) => dispatch(aboutMeProfile(values))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
+  mapPropsToValues({ profile }){
     return{
-      status: '',
-      bio: '',
-      interests: [],
-      profession: '',
-      birthPlace: ''
+      status: profile.status || '',
+      bio: profile.bio || '',
+      interests: profile.interests || [],
+      profession: profile.profession || '',
+      birthPlace: profile.birthPlace || ''
     }
   },
+  enableReinitialize: true,
   validationSchema: object().shape({
     status: string().required('Required'),
     bio: string().min(3, 'Too Short!').max(200, 'Too Long').required('Required'),
@@ -129,10 +145,7 @@ export default withFormik({
     profession: string().min(2, 'Too Short!').max(100, 'Too Long').required('Required'),
     birthPlace: string().min(2, 'Too Short!').max(200, 'Too Long')
   }),
-  handleSubmit(values, { setSubmitting }){
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 3000);
+  handleSubmit(values, { props }){
+    props.aboutMeProfile(values);
   }
-})(AboutMeSetting);
+})(AboutMeSetting));

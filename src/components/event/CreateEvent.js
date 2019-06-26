@@ -5,7 +5,7 @@ import {object, string, date} from 'yup';
 import { connect } from 'react-redux';
 import { addEvent } from "../../store/actions/eventActions";
 
-const CreateEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
+const CreateEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
 
   useEffect(() => {
     if(success){
@@ -14,14 +14,15 @@ const CreateEvent = ({success, history, addEvent, values, handleChange, handleSu
   }, [success]);
 
   return (
-    <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } isSubmitting={ isSubmitting }/>
+    <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } submitting={ submitting }/>
   );
 };
 
-const mapStateToProps = ({ event: {err}, form: {success}}) => {
+const mapStateToProps = ({ event: {err}, form: {success, submitting}}) => {
   return{
     err,
-    success
+    success,
+    submitting
   }
 };
 
@@ -58,10 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     latLng: object(),
     dateTime: date().required('Required')
   }),
-  handleSubmit(values, { props, setSubmitting }){
+  handleSubmit(values, { props }){
     props.addEvent(values);
-    setTimeout(() => {
-      setSubmitting(false);
-    },3000);
   }
 })(CreateEvent));

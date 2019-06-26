@@ -11,7 +11,7 @@ import { basicProfile } from "../../store/actions/profileActions";
 const appId = process.env.REACT_APP_HERE_MAPS_APP_ID;
 const appCode = process.env.REACT_APP_HERE_MAPS_APP_CODE;
 
-const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting}) => {
+const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
 
   const [cityOptions, setCityOptions] = useState([]);
   const [city, setCity] = useState(values.address);
@@ -93,16 +93,17 @@ const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors
             negative
             header={errors.address}/>}
           <Divider />
-          <Button positive type='submit' loading={isSubmitting}>Update Profile</Button>
+          <Button positive type='submit' loading={submitting}>Update Profile</Button>
         </Form>
       </Card.Content>
     </Card>
   );
 };
 
-const mapStateToProps = ({firebase: { profile }}) => {
+const mapStateToProps = ({firebase: { profile }, form: {submitting}}) => {
   return{
-    profile
+    profile,
+    submitting
   }
 };
 
@@ -118,7 +119,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
       return{
         name: profile.name || '',
         gender: profile.gender || 'male',
-        birthDate: new Date(profile.birthDate.seconds * 1000) || '',
+        birthDate: profile.birthDate ? new Date(profile.birthDate.seconds * 1000) : '',
         address: profile.address ? profile.address : ''
       }
     }
@@ -133,10 +134,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     address: string().min(5, 'Too Short!')
     .max(100, 'Too Long!')
   }),
-  handleSubmit(values, {props, setSubmitting }){
-    props.basicProfile(values);
-    setTimeout(() => {
-      setSubmitting(false);
-    },2000);
+  handleSubmit(values, {props: {profile, basicProfile}}){
+    console.log(values.birthDate);
+    console.log(profile.birthDate);
+    if(values.name === profile.name && values.gender === profile.gender && values.address === profile.address){
+      console.log('Not Submitting Form!');
+    }else{
+      basicProfile(values);
+    }
   }
 })(BasicSetting));

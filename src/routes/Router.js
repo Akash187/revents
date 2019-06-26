@@ -9,12 +9,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import People from "../components/people/People";
 import CreateEvent from "../components/event/CreateEvent";
 import Settings from "../components/settings/Settings";
+import Authenticate from "../components/auth/Authenticate";
 
 const Router = (props) => {
   return(
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={ Home }/>
+        <Route exact path='/authenticate' component={ Authenticate }/>
         <NotProtectedRoute exact path='/dashboard' component={ Dashboard} />
         <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
         <ProtectedRoute exact path='/user/:id' component={ User } />

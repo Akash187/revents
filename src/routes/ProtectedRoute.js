@@ -19,7 +19,7 @@ const ProtectedRoute = ({component: Component,auth, ...rest}) => {
               </Container>
             </Fragment>
           }else{
-            return <Redirect to='/dashboard'/>
+            return <Redirect to='/authenticate'/>
           }
         }else{
           return <Dimmer active inverted>

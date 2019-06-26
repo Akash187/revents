@@ -4,7 +4,7 @@ import EventFormLocation from './EventFormLocation';
 import EventDatePicker from "./EventDatePicker";
 import { Link } from 'react-router-dom';
 
-const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting }) => {
+const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting }) => {
 
   const options = [
     {text: 'Culture', value: 'culture'},
@@ -42,7 +42,7 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
               <Header color='teal' size='medium' content='EVENT LOCATION DETAILS'/>
               <EventFormLocation values={values} touched={touched} errors={errors} setFieldValue={setFieldValue}/>
               <EventDatePicker touched={touched} values={values} errors={errors} setFieldValue={setFieldValue}/>
-              <Button type='submit' positive loading={isSubmitting}>Submit</Button>
+              <Button type='submit' positive loading={submitting}>Submit</Button>
               <Link to='/dashboard'><Button>Cancel</Button></Link>
             </Form>
           </Card.Content>

@@ -221,4 +221,14 @@ code {
     z-index: 999999;
 }
 
+.authenticate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.authenticate-card{
+    width: 360px !important;
+}
 
