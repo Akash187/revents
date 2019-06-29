@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^6.0.4",
+    "firebase": "^6.2.4",
     "formik": "^1.5.4",
     "here-maps-react": "^0.1.2",
     "moment": "^2.24.0",
