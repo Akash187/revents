@@ -43,7 +43,7 @@ const ImageUpload = ({image, setImage}) => {
     isDragReject
   } = useDropzone({
     accept: 'image/*',
-    maxSize: 5242880,
+    maxSize: 1048576,
     multiple: false,
     onDropAccepted: (File) => {
       setImageUploadError(null);
@@ -53,7 +53,7 @@ const ImageUpload = ({image, setImage}) => {
       };
       reader.readAsDataURL(File[0]);
     },
-    onDropRejected: () => {setImageUploadError('File should be Image and must not be more than 5MB size.')}
+    onDropRejected: () => {setImageUploadError('File should be Image and must not be more than 1MB size.')}
   });
 
   const style = useMemo(() => ({
