@@ -1,4 +1,4 @@
-import {firestore, storage} from "../../config/fbConfig";
+import {firebase, firestore, storage} from "../../config/fbConfig";
 import {toastr} from 'react-redux-toastr';
 const uuidv1 = require('uuid/v1');
 
@@ -11,7 +11,7 @@ export const basicProfile = (info) => {
     firestore.collection('users').doc(uid).update({
       ...info
     }).then(() => {
-      toastr.success('Basic profile Updated.');
+      toastr.success('Success', 'Basic profile Updated.');
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
       });
@@ -36,7 +36,7 @@ export const aboutMeProfile = (info) => {
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
       });
-      toastr.success('About Me Updated.');
+      toastr.success('Success','About Me Updated.');
     }).catch((err) => {
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
@@ -51,7 +51,6 @@ export const uploadPhoto = (image) => {
     const storageRef = storage.ref('images');
     const fileName = uuidv1();
     const uid = getState().firebase.auth.uid;
-    const previousImages = getState().firebase.profile.images || [];
     dispatch({
       type: 'FORM_SUBMITTING'
     });
@@ -60,11 +59,11 @@ export const uploadPhoto = (image) => {
         return storageRef.child(`${uid}/${fileName}`).getDownloadURL()
     }).then((url) => {
       return firestore.collection('users').doc(uid).update({
-        images: [...previousImages, url]
+        images: firebase.firestore.FieldValue.arrayUnion(url)
       })
     })
     .then(() => {
-      toastr.success('Image added successfully.');
+      toastr.success('Success','Image added successfully.');
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
       });
@@ -72,6 +71,7 @@ export const uploadPhoto = (image) => {
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
       });
+      console.log(err.message);
       toastr.error('Unable to add Image.', err.message);
     });
   }
@@ -104,11 +104,9 @@ export const deletePhoto = (image) => {
     //Extract fileName from image url
     const fileName = image.substring(112, 148);
     const uid = getState().firebase.auth.uid;
-    const previousImages = getState().firebase.profile.images;
-    const updatedImages = previousImages.filter((currImage) => currImage !== image);
     storageRef.child(`${uid}/${fileName}`).delete().then(function() {
       return firestore.collection('users').doc(uid).update({
-        images: updatedImages
+        images: firebase.firestore.FieldValue.arrayRemove(image)
       })
     })
     .then(() => {

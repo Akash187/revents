@@ -4,7 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = ({name, history, signOut}) => {
+const SignedInLinks = ({profile, history, signOut}) => {
   return (
     <Fragment>
       <Menu.Item>
@@ -21,8 +21,8 @@ const SignedInLinks = ({name, history, signOut}) => {
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Image circular size='mini' src='/assets/user.png' alt="logo"/>
-          <Dropdown text={ name || 'Random'} pointing className='link item navbar-dropdown'>
+          <Image circular size='mini' src={profile.images ? profile.images[0] : '/assets/user.png'} alt="logo"/>
+          <Dropdown text={ profile.name || 'Random'} pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
               <Dropdown.Item icon='plus' text='Create Event'/>
               <Dropdown.Item icon='calendar alternate' text='My Event'/>
@@ -40,7 +40,7 @@ const SignedInLinks = ({name, history, signOut}) => {
 
 const mapStateToProps = ({firebase: { profile }}) => {
   return{
-    name: profile.name
+    profile
   };
 };
 

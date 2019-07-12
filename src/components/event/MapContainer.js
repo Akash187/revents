@@ -1,60 +1,23 @@
-import React, { Component } from 'react';
-import {Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
+import React from 'react';
+import HEREMap, { Marker } from 'here-maps-react';
 
-const mapStyles = {
-  width: '100%',
-  maxHeight: '100%'
-};
-
-class MapContainer extends Component {
-  state = {
-    showingInfoWindow: false,  //Hides or the shows the infoWindow
-    activeMarker: {},          //Shows the active marker upon click
-    selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
-  };
-
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
+class MapContainer extends React.Component {
 
   render() {
     return (
-      <Map
-        google={this.props.google}
-        zoom={16}
-        style={mapStyles}
-        initialCenter={this.props.latLng}
+      <HEREMap
+        appId={ process.env.REACT_APP_HERE_MAPS_APP_ID}
+        appCode={ process.env.REACT_APP_HERE_MAPS_APP_CODE}
+        center={this.props.latLng}
+        zoom={14}
+        interactive
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={this.props.venue}
-        />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-      </Map>
-    );
+        <Marker lat={this.props.latLng.lat} lng={this.props.latLng.lng} >
+          <div className='circle-marker' />
+        </Marker>
+      </HEREMap>
+    )
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-})(MapContainer);
+export default MapContainer;

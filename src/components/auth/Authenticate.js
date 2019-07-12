@@ -24,7 +24,7 @@ const Authenticate = ({history}) => {
           <Card.Description>
             Or click cancel to continue as a guest.
           </Card.Description>
-          <Button style={{ margin: '1rem 0'}} onClick={() => history.push('/dashboard')}>Cancel</Button>
+          <Button style={{ margin: '1rem 0'}} onClick={() => history.goBack()}>Cancel</Button>
         </Card.Content>
       </Card>
     </div>

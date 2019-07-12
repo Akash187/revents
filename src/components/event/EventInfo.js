@@ -9,7 +9,7 @@ const EventInfo = ({event}) => {
     <div>
       <EventInfoHeader name={event.name} dateTime={event.dateTime.seconds} about={event.about}/>
       <EventMoreInfo detail={event.detail} venue={event.venue} dateTime={event.dateTime.seconds} latLng={event.latLng}/>
-      <EventComment/>
+      <EventComment eventId={event.id} comments={event.comments || []}/>
     </div>
   );
 };

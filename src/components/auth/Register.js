@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { signUp } from "../../store/actions/authActions";
 import { withRouter } from "react-router-dom";
 
-const Register = ({history, success, signUp, trigger }) => {
+const Register = ({history, signUp, trigger }) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    if(success){
-      history.push('/dashboard');
-    }
-  }, [success]);
 
   const handleChange = (e) => {
     if(e.target.id === 'name'){
@@ -64,16 +58,10 @@ const Register = ({history, success, signUp, trigger }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    success: state.form.success
-  }
-};
-
 const mapDispatchToProps = (dispatch) => {
   return{
     signUp: (newUser) => dispatch(signUp(newUser))
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));
+export default connect(null, mapDispatchToProps)(withRouter(Register));
