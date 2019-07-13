@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Grid, Loader } from 'semantic-ui-react';
 import EventInfo from "./EventInfo";
 import AttendeeList from "./AttendeeList";
@@ -6,22 +6,33 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import DynamicScrollToTop from "../../routes/DynamicScrollToTop";
+import {firestore} from "../../config/fbConfig";
 
 const EventDetail = ({event}) => {
+
+  const [host, setHost] = useState({});
+
+  useEffect(() => {
+    if(event){
+      firestore.collection("users").doc(event.createdBy).get()
+        .then((doc) => setHost({id: event.createdBy, ...doc.data()}))
+        .catch((err) => console.log(err))
+    }
+  }, [event]);
 
   return (
     <div>
       <DynamicScrollToTop/>
-      <Grid>
-        <Grid.Column mobile={16} computer={10}>
-          {event ? <EventInfo event={event}/> :
-            <Loader active/>
-          }
-        </Grid.Column>
-        <Grid.Column mobile={16} computer={6}>
-          <AttendeeList/>
-        </Grid.Column>
-      </Grid>
+      {event ?
+        <Grid>
+          <Grid.Column mobile={16} computer={10}>
+            <EventInfo event={event} host={host}/>
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={6}>
+            <AttendeeList host={host} attendeeList={event.attendeeList ? event.attendeeList : []}/>
+          </Grid.Column>
+        </Grid>:
+        <Loader active/> }
     </div>
   );
 };

@@ -3,12 +3,14 @@ import {toastr} from 'react-redux-toastr';
 
 export const addEvent = (eventDetail) => {
   return (dispatch, getState) => {
+    const uid = getState().firebase.auth.uid;
     dispatch({
       type: 'FORM_SUBMITTING'
     });
     firestore.collection('events').add({
       ...eventDetail,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdBy: uid
     }).then(() => {
       toastr.success('Success', 'Event added successful.');
       dispatch({
@@ -27,6 +29,60 @@ export const addEvent = (eventDetail) => {
       toastr.error('Failed to add Event.', err.message);
       dispatch({type: 'ADD_EVENT_ERROR',
       err: err.message});
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+    })
+  }
+};
+
+export const joinEvent = (eventId) => {
+  return (dispatch, getState) => {
+    const uid = getState().firebase.auth.uid;
+    dispatch({
+      type: 'FORM_SUBMITTING'
+    });
+    firestore.collection('events').doc(eventId).update({
+      attendeeList: firebase.firestore.FieldValue.arrayUnion(uid)
+    }).then(() => {
+      dispatch({
+        type: 'FORM_SUCCESS'
+      });
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+      dispatch({
+        type: 'INITIALIZE_FORM'
+      });
+    }).catch((err) => {
+      toastr.error('Failed to join Event.', err.message);
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+    })
+  }
+};
+
+export const leaveEvent = (eventId) => {
+  return (dispatch, getState) => {
+    const uid = getState().firebase.auth.uid;
+    dispatch({
+      type: 'FORM_SUBMITTING'
+    });
+    firestore.collection('events').doc(eventId).update({
+      attendeeList: firebase.firestore.FieldValue.arrayRemove(uid)
+    }).then(() => {
+      dispatch({
+        type: 'FORM_SUCCESS'
+      });
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+      dispatch({
+        type: 'INITIALIZE_FORM'
+      });
+    }).catch((err) => {
+      toastr.error('Failed to join Event.', err.message);
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
       });

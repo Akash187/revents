@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import { Card, Header, Button } from 'semantic-ui-react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import {joinEvent, leaveEvent} from "../../store/actions/eventActions";
 
-const EventInfoHeader = ({name, about, dateTime}) => {
-
-  const [loading, setLoading] = useState(false);
-  const [joined, setJoined] = useState(true);
+const EventInfoHeader = ({id, name, about, dateTime, uid, host, attendeeList, joinEvent, leaveEvent}) => {
 
   return (
     <Card fluid>
@@ -16,17 +15,32 @@ const EventInfoHeader = ({name, about, dateTime}) => {
           content={name}
           subheader= {moment(dateTime*1000).format('dddd Do MMMM')}/>
         <Header.Subheader
-          content={`Hosted by Clark`}
+          content={`Hosted by ${host.name}`}
         />
       </div>
       <Card.Content>
         {
-          joined ? <Button loading={loading || false} color='teal'>Join The Event</Button> :
-            <Button loading={loading || false} color='teal'>Cancel My Place</Button>
+          (uid === host.id) ? <Button primary>Edit Event</Button> :
+            !(attendeeList.includes(uid)) ? <Button color='teal' onClick={() => joinEvent(id)}>Join The Event</Button> :
+            <Button color='red' onClick={() => leaveEvent(id)}>Cancel My Place</Button>
         }
       </Card.Content>
     </Card>
   );
 };
 
-export default EventInfoHeader;
+const mapStateToProps = ({firebase, form}) => {
+  return{
+    uid: firebase.auth.uid,
+    submitting: form.submitting
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    joinEvent: (userId) => dispatch(joinEvent(userId)),
+    leaveEvent: (userId) => dispatch(leaveEvent(userId))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventInfoHeader);
