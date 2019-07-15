@@ -182,3 +182,13 @@ export const deleteChildComment = (commentId, parentId) => {
       });
   }
 };
+
+export const storeEventsAndUsers = (events, users, haveMoreEvent, lastDocSnapshot) => {
+  return {
+    type: 'STORE_EVENTS_AND_USERS',
+    events,
+    users,
+    haveMoreEvent,
+    lastDocSnapshot
+  }
+};

@@ -1,5 +1,9 @@
 const initState = {
-  err: null
+  err: null,
+  events: [],
+  users: [],
+  haveMoreEvent: true,
+  lastDocSnapshot: {}
 };
 
 const eventReducer = (state = initState, action) => {
@@ -13,6 +17,14 @@ const eventReducer = (state = initState, action) => {
       return{
         ...state,
         err: action.err
+      };
+    case 'STORE_EVENTS_AND_USERS':
+      return{
+        ...state,
+        events: action.events,
+        users: action.users,
+        haveMoreEvent: action.haveMoreEvent,
+        lastDocSnapshot: action.lastDocSnapshot
       };
     default:
       return state;

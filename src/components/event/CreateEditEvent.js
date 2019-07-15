@@ -5,7 +5,7 @@ import {object, string, date} from 'yup';
 import { connect } from 'react-redux';
 import { addEvent } from "../../store/actions/eventActions";
 
-const CreateEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
+const CreateEditEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
 
   useEffect(() => {
     if(success){
@@ -62,4 +62,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
   handleSubmit(values, { props }){
     props.addEvent(values);
   }
-})(CreateEvent));
+})(CreateEditEvent));

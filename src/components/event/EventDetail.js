@@ -5,7 +5,6 @@ import AttendeeList from "./AttendeeList";
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import DynamicScrollToTop from "../../routes/DynamicScrollToTop";
 import {firestore} from "../../config/fbConfig";
 
 const EventDetail = ({event}) => {
@@ -22,7 +21,6 @@ const EventDetail = ({event}) => {
 
   return (
     <div>
-      <DynamicScrollToTop/>
       {event ?
         <Grid>
           <Grid.Column mobile={16} computer={10}>

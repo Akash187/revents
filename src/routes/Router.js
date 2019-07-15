@@ -7,7 +7,7 @@ import EventDetail from "../components/event/EventDetail";
 import User from "../components/user/User";
 import ProtectedRoute from "./ProtectedRoute";
 import People from "../components/people/People";
-import CreateEvent from "../components/event/CreateEvent";
+import CreateEditEvent from "../components/event/CreateEditEvent";
 import Settings from "../components/settings/Settings";
 import Authenticate from "../components/auth/Authenticate";
 
@@ -21,7 +21,7 @@ const Router = (props) => {
         <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
         <ProtectedRoute exact path='/user/:id' component={ User } />
         <ProtectedRoute exact path='/people/:id' component={ People } />
-        <ProtectedRoute exact path='/createEvent' component={ CreateEvent } />
+        <ProtectedRoute exact path='/createEvent' component={ CreateEditEvent } />
         <ProtectedRoute path='/settings' component={ Settings } />
         <Route path="*" render = {() => <Redirect to="/" />}/>
       </Switch>

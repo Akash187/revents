@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, Button} from "semantic-ui-react";
 import Login from "./Login";
 import Register from "./Register";
+import {connect} from 'react-redux';
 
-const Authenticate = ({history}) => {
+const Authenticate = ({history, auth}) => {
+
+  //The setTimeout help in creating user doc before route change
+  useEffect(() => {
+    if(auth.uid){
+      setTimeout(() => history.goBack(),1000);
+    }
+  },[auth]);
+
   return (
     <div className='authenticate'>
       <Card className='authenticate-card'>
@@ -31,4 +40,10 @@ const Authenticate = ({history}) => {
   );
 };
 
-export default Authenticate;
+const mapStateToProps = (state) => {
+  return{
+    auth: state.firebase.auth
+  }
+};
+
+export default connect(mapStateToProps)(Authenticate);
