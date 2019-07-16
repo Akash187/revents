@@ -1,7 +1,7 @@
 const initState = {
   err: null,
   events: [],
-  users: [],
+  users: {},
   haveMoreEvent: true,
   lastDocSnapshot: {}
 };

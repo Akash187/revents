@@ -3,7 +3,7 @@ import Event from "./Event";
 import InfiniteScroll from 'react-infinite-scroller';
 import {Loader} from 'semantic-ui-react';
 
-const Events = ({events, fetchMoreEvents, haveMoreData}) => {
+const Events = ({events, users, fetchMoreEvents, haveMoreData}) => {
 
   return (
     <Fragment>
@@ -13,7 +13,7 @@ const Events = ({events, fetchMoreEvents, haveMoreData}) => {
         hasMore={haveMoreData}
         loader={<Loader key={0} active size='small' inline='centered'>Loading...</Loader>}
       >
-        {events.map((event) => <Event key={event.id} event={event}/>)}
+        {events.map((event) => <Event key={event.id} event={event} users={users}/>)}
       </InfiniteScroll>
     </Fragment>
   );

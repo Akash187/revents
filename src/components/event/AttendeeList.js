@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card, Segment, Header, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import {firestore} from "../../config/fbConfig";
@@ -31,10 +31,6 @@ const AttendeeList = ({host, attendeeList}) => {
     }
   }, [attendeeList]);
 
-  // useEffect(() => {
-  //   console.log(attendees);
-  // }, [attendees]);
-
   return (
     <div className='notification'>
       <Card fluid>
@@ -52,17 +48,19 @@ const AttendeeList = ({host, attendeeList}) => {
             </Link>
           </div>
         </Card.Content>
-        {attendeeList.map(userId => {
-          let attendee = attendees[userId];
-          return attendee ? <Card.Content key={attendee.id}>
-            <div className="attendee">
-              <Image src={attendee.images ? attendee.images[0] : '/assets/user.png'} size='tiny'/>
-              <Link to='/'>
-                <Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>{attendee.name}</Header>
-              </Link>
-            </div>
-          </Card.Content> : <div/>
-        })}
+        <span style={{maxHeight: '324px', overflowY: 'auto'}}>
+          {attendeeList.map(userId => {
+            let attendee = attendees[userId];
+            return attendee ? <Card.Content style={{padding: '14px'}} key={attendee.id}>
+              <div className="attendee">
+                <Image src={attendee.images ? attendee.images[0] : '/assets/user.png'} size='tiny'/>
+                <Link to='/'>
+                  <Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>{attendee.name}</Header>
+                </Link>
+              </div>
+            </Card.Content> : <div/>
+          })}
+        </span>
       </Card>
     </div>
   );

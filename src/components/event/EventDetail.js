@@ -7,9 +7,13 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import {firestore} from "../../config/fbConfig";
 
-const EventDetail = ({event}) => {
+const EventDetail = ({event, match}) => {
 
   const [host, setHost] = useState({});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[]);
 
   useEffect(() => {
     if(event){
@@ -21,7 +25,7 @@ const EventDetail = ({event}) => {
 
   return (
     <div>
-      {event ?
+      {(event && event.id === match.params.id) ?
         <Grid>
           <Grid.Column mobile={16} computer={10}>
             <EventInfo event={event} host={host}/>

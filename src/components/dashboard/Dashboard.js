@@ -22,7 +22,7 @@ const Dashboard = ({events, users, haveMoreEvent, lastDocSnapshot, storeEventsAn
   const fetchMoreEvents = async () => {
     if(!fetching){
       setFetching(true);
-      console.log("fetchingMoreEvents");
+      //console.log("fetchingMoreEvents");
       let query;
       if(events && events.length === 0){
         query = firestore.collection('events').orderBy("createdAt", "desc").limit(itemsPerPage);
@@ -36,24 +36,49 @@ const Dashboard = ({events, users, haveMoreEvent, lastDocSnapshot, storeEventsAn
       }
       lastDocSnapshot = lastVisible;
       const items = snapshot.docs.map((doc, index) => {
-        console.log("Document Name : ", doc.data().name);
+        //console.log("Document Name : ", doc.data().name);
         return {id: snapshot.docs[index].id, ...doc.data()}
       });
       events = [...events, ...items];
-      storeEventsAndUsers(events, [], haveMoreEvent, lastDocSnapshot);
+      users = await fetchUsers(events);
+      storeEventsAndUsers(events, users, haveMoreEvent, lastDocSnapshot);
       setFetching(false);
     }
   };
 
-  useEffect(() => {
-    console.log("events",events);
-  },[events]);
+  const fetchUsers = async (events) => {
+    let people = [];
+    events.forEach(event => {
+      people.push(event.createdBy);
+      people = [...people, ...event.attendeeList]
+    });
+    let uniqPeople = [...new Set(people)];
+    let promises = uniqPeople.map(async (userId) => {
+      if(!(userId in users)){
+        //console.log("fetching New", userId);
+        let doc = await firestore.collection("users").doc(userId).get();
+        return new Promise((res, rej) => res({id: userId, ...doc.data()}))
+      }else{
+        //console.log("Using Local", userId);
+        return new Promise((res, rej) => res(users[userId]))
+      }
+    });
+
+    return Promise.all(promises)
+      .then((results) => {
+        let users = {};
+        results.forEach(result => {
+          users[result.id] = result
+        });
+        return users;
+      });
+  };
 
   return (
     <div>
       {(events && events.length > 0) ? <Grid>
         <Grid.Column mobile={16} computer={10}>
-          <Events events={events} fetchMoreEvents={fetchMoreEvents} haveMoreData={haveMoreEvent}/>
+          <Events events={events} users={users} fetchMoreEvents={fetchMoreEvents} haveMoreData={haveMoreEvent}/>
         </Grid.Column>
         <Grid.Column mobile={16} computer={6}>
           <Notification/>

@@ -4,19 +4,23 @@ import {Link} from "react-router-dom";
 import LazyLoad from 'react-lazyload';
 import moment from 'moment';
 
-const Event = ({event}) => {
+const Event = ({event, users}) => {
+
+  const createdBy = users[event.createdBy];
+  const attendeeList = event.attendeeList;
+
   return (
     <Card fluid>
       <Card.Content>
         <Grid columns={2}>
           <Grid.Column width={3}>
             <LazyLoad>
-              <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='small' circular />
+              <Image src={(createdBy && createdBy.images) ? createdBy.images[0] : '/assets/user.png'} size='small' circular />
             </LazyLoad>
           </Grid.Column>
           <Grid.Column width={13}>
             <Header>{event.name}</Header>
-            <Header.Subheader>Hosted by <Link to='/'>Clark</Link></Header.Subheader>
+            <Header.Subheader>Hosted by <Link to='/'>{createdBy && createdBy.name}</Link></Header.Subheader>
           </Grid.Column>
         </Grid>
       </Card.Content>
@@ -29,9 +33,11 @@ const Event = ({event}) => {
       </Card.Content>
       <Card.Content className='people-coming-list'>
         <Image.Group size='mini'>
-          <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular />
-          <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular />
-          <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' circular />
+          <LazyLoad>
+            {attendeeList.map((attendeeId) => {
+              return <Image key={attendeeId} src={(users[attendeeId] && users[attendeeId].images) ? users[attendeeId].images[0] : '/assets/user.png'} circular />
+            })}
+          </LazyLoad>
         </Image.Group>
       </Card.Content>
       <Card.Content>

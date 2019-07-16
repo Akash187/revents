@@ -10,7 +10,8 @@ export const addEvent = (eventDetail) => {
     firestore.collection('events').add({
       ...eventDetail,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      createdBy: uid
+      createdBy: uid,
+      attendeeList: []
     }).then(() => {
       toastr.success('Success', 'Event added successful.');
       dispatch({
