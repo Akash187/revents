@@ -1,18 +1,19 @@
 import React from 'react';
 import { Card, Image, Segment } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
+import moment from 'moment';
 
-const UserEvent = () => {
+const UserEvent = ({event}) => {
   return (
-    <Link to='/event/123'>
-      <Card className='user-event no-margin'>
-        <Image fluid src='/assets/categoryImages/drinks.jpg'/>
-        <Segment basic style={{height: 120}}>
-          <h3 className='no-margin user-event-title'>A trip to Empire State</h3>
-          <h4 className='no-margin user-event-date'>02 Feb 2019 5:30PM</h4>
-        </Segment>
-      </Card>
-    </Link>
+    event ? <Link to={`/event/${event.id}`}>
+        <Card className='user-event no-margin'>
+          <Image fluid src={`/assets/categoryImages/${event.about}.jpg`} style={{'height' : '140px', 'objectFit': 'cover'}}/>
+          <Segment basic style={{height: 100}}>
+            <h3 className='no-margin user-event-title'>{event.name}</h3>
+            <h4 className='no-margin user-event-date'>{moment(event.dateTime.seconds * 1000).format('Do MMM YYYY, h:mmA')}</h4>
+          </Segment>
+        </Card>
+      </Link> : <div/>
   );
 };
 

@@ -26,6 +26,7 @@ export const addEvent = (eventDetail) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
+      window.location.reload();
     }).catch((err) => {
       toastr.error('Failed to add Event.', err.message);
       dispatch({type: 'ADD_EVENT_ERROR',

@@ -1,17 +1,20 @@
 import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
+import LazyLoad from 'react-lazyload';
 
-const UserInfoHeader = () => {
+const UserInfoHeader = ({profile}) => {
   return (
     <Card fluid>
-      <Card.Content className='user-info-header'>
-        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' size='small' circular />
+      {profile && <Card.Content className='user-info-header'>
+        <LazyLoad>
+        <Image src={profile.images ? profile.images[0] : '/assets/user.png'} size='small' circular />
+        </LazyLoad>
         <div className='user-info-header-detail'>
-          <h2 className='no-margin'>Akash Kumar Seth</h2>
-          <h4 className='no-margin'>Doctor</h4>
-          <h4 className='no-margin'>41, Pragtipuram Colony, Raebareli</h4>
+          <h2 className='no-margin'>{profile.name}</h2>
+          <h4 className='no-margin'>{profile.bio ? profile.bio : 'Bio not provided'}</h4>
+          <h4 className='no-margin'>{profile.address ? profile.address : 'Address not provided'}</h4>
         </div>
-      </Card.Content>
+      </Card.Content>}
     </Card>
   );
 };

@@ -128,12 +128,26 @@ code {
     text-transform: capitalize;
 }
 
-.user-event, .person {
+.user-event{
     max-width: 180px !important;
     color: black;
 }
 
+.person {
+    max-width: 170px !important;
+    color: black;
+    height: 100%;
+}
+
 .user-event-title, .person-title {
+    text-align: center;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.person-title {
     text-align: center;
 }
 
@@ -143,9 +157,15 @@ code {
     text-align: center;
 }
 
-.user-event-list, .following-list, .followers-list {
+.user-event-list{
     display: grid;
     grid-template-columns: repeat(auto-fill, 180px);
+    grid-gap: 1rem;
+}
+
+.following-list, .followers-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
     grid-gap: 1rem;
 }
 
@@ -230,5 +250,9 @@ code {
 
 .authenticate-card{
     width: 360px !important;
+}
+
+.userMoreInfo-field{
+    margin-top: 0.5rem;
 }
 

@@ -116,3 +116,59 @@ export const deletePhoto = (image) => {
     });
   }
 };
+
+export const followUser = (uid, userId, userName) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'FORM_SUBMITTING'
+    });
+    firestore.collection('users').doc(userId).update({
+      follower: firebase.firestore.FieldValue.arrayUnion(uid)
+    })
+    .then(() => {
+      firestore.collection('users').doc(uid).update({
+        following: firebase.firestore.FieldValue.arrayUnion(userId)
+      })
+    })
+    .then(() => {
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+      toastr.success('Success',`You are following ${userName}.`);
+    })
+    .catch((err) => {
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+      toastr.error('Unable to follow User.', err.message);
+    });
+  }
+};
+
+export const unFollowUser = (uid, userId, userName) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'FORM_SUBMITTING'
+    });
+    firestore.collection('users').doc(userId).update({
+      follower: firebase.firestore.FieldValue.arrayRemove(uid)
+    })
+      .then(() => {
+        firestore.collection('users').doc(uid).update({
+          following: firebase.firestore.FieldValue.arrayRemove(userId)
+        })
+      })
+      .then(() => {
+        dispatch({
+          type: 'RESET_FORM_SUBMITTING'
+        });
+        toastr.success('Success',`You have unfollowed ${userName}.`);
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'RESET_FORM_SUBMITTING'
+        });
+        toastr.error('Unable to follow User.', err.message);
+      });
+  }
+};

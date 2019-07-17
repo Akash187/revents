@@ -2,17 +2,18 @@ import React from 'react';
 import {Card, Image, Segment} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 
-const Person = () => {
+const Person = ({user}) => {
   return (
-    <Link to='/user/123'>
+    (user) ?
+    <Link to={`/user/${user.id}`}>
       <Card className='person no-margin'>
-        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' fluid/>
+        <Image src={user.images ? user.images[0] : '/assets/user.png'} fluid/>
         <Segment basic>
-          <h3 className='no-margin person-title'>Laura Huna Laura Huna</h3>
-          <h5 className='no-margin person-address'>Kisslemee Florida, United States</h5>
+          <h3 className='no-margin person-title'>{user.name}</h3>
+          <h5 className='no-margin person-address'>{user.address || 'Address not provided'}</h5>
         </Segment>
       </Card>
-    </Link>
+    </Link> : <div/>
   );
 };
 

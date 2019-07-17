@@ -1,4 +1,4 @@
-import {auth, firestore} from "../../config/fbConfig";
+import {auth, firebase, firestore} from "../../config/fbConfig";
 import {toastr} from 'react-redux-toastr';
 
 export const signIn = (credentials) => {
@@ -30,7 +30,8 @@ export const signUp = (newUser) => {
     ).then((res) => {
       firestore.collection('users').doc(res.user.uid)
         .set({
-          name: newUser.name
+          name: newUser.name,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
       return res.user.uid;
     }).then(() => {

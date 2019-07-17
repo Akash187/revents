@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { Card, Segment, Header, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import {firestore} from "../../config/fbConfig";
+import {connect} from 'react-redux';
 
-const AttendeeList = ({host, attendeeList}) => {
+const AttendeeList = ({host, attendeeList, uid}) => {
 
   const [attendees, setAttendees] = useState({});
 
@@ -43,8 +44,8 @@ const AttendeeList = ({host, attendeeList}) => {
               Host
             </Label>
             <Image src={host.images ? host.images[0] : '/assets/user.png'} size='tiny' style={{ marginLeft: -55}}/>
-            <Link to='/'>
-              <Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>{host.name}</Header>
+            <Link to={uid && `/user/${host.id}`}>
+              <Header as='h3' color={uid && 'blue'} style={{ marginTop: 0, marginLeft: 10, 'cursor': (uid ? 'pointer' : 'default')}}>{host.name}</Header>
             </Link>
           </div>
         </Card.Content>
@@ -54,8 +55,8 @@ const AttendeeList = ({host, attendeeList}) => {
             return attendee ? <Card.Content style={{padding: '14px'}} key={attendee.id}>
               <div className="attendee">
                 <Image src={attendee.images ? attendee.images[0] : '/assets/user.png'} size='tiny'/>
-                <Link to='/'>
-                  <Header as='h3' color='blue' style={{ marginTop: 0, marginLeft: 10}}>{attendee.name}</Header>
+                <Link to={uid && `/user/${userId}`}>
+                  <Header as='h3' color={uid && 'blue'} style={{ marginTop: 0, marginLeft: 10, 'cursor': (uid ? 'pointer' : 'default')}}>{attendee.name}</Header>
                 </Link>
               </div>
             </Card.Content> : <div/>
@@ -66,4 +67,10 @@ const AttendeeList = ({host, attendeeList}) => {
   );
 };
 
-export default AttendeeList;
+const mapStateToProps = ({firebase: {auth}}) => {
+  return {
+    uid: auth.uid
+  }
+};
+
+export default connect(mapStateToProps)(AttendeeList);

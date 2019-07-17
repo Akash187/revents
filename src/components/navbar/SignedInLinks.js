@@ -4,11 +4,11 @@ import {NavLink, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = ({profile, history, signOut}) => {
+const SignedInLinks = ({profile, history, signOut, auth}) => {
   return (
     <Fragment>
       <Menu.Item>
-        <NavLink to='/people/123'>
+        <NavLink to={`/people/${auth.uid}`}>
           <Header as='h5' inverted>
             People
           </Header>
@@ -27,7 +27,7 @@ const SignedInLinks = ({profile, history, signOut}) => {
               <Dropdown.Item icon='plus' text='Create Event'/>
               <Dropdown.Item icon='calendar alternate' text='My Event'/>
               <Dropdown.Item icon='users' text='My Community'/>
-              <Dropdown.Item icon='user' text='My Profile' onClick={() => history.push('/user/123')}/>
+              <Dropdown.Item icon='user' text='My Profile' onClick={() => history.push(`/user/${auth.uid}`)}/>
               <Dropdown.Item icon='settings' text='Setting' onClick={() => history.push('/settings/basic')}/>
               <Dropdown.Item icon='power' text='Logout' onClick={signOut}/>
             </Dropdown.Menu>
@@ -38,9 +38,10 @@ const SignedInLinks = ({profile, history, signOut}) => {
   );
 };
 
-const mapStateToProps = ({firebase: { profile }}) => {
+const mapStateToProps = ({firebase: { profile, auth }}) => {
   return{
-    profile
+    profile,
+    auth
   };
 };
 

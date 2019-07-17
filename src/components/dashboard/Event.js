@@ -3,8 +3,10 @@ import { Card, Grid, Image, Header, Icon, Button } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import LazyLoad from 'react-lazyload';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
-const Event = ({event, users}) => {
+const Event = ({event, users, uid, history}) => {
 
   const createdBy = users[event.createdBy];
   const attendeeList = event.attendeeList;
@@ -20,7 +22,14 @@ const Event = ({event, users}) => {
           </Grid.Column>
           <Grid.Column width={13}>
             <Header>{event.name}</Header>
-            <Header.Subheader>Hosted by <Link to='/'>{createdBy && createdBy.name}</Link></Header.Subheader>
+            <Header.Subheader>Hosted by <Link to={uid && `/user/${createdBy.id}`}>
+              <span style={{
+                'cursor': (uid ? 'pointer' : 'default'),
+                'color' : (uid ? 'blue' : 'black')
+              }}>
+                {createdBy && createdBy.name}
+              </span>
+              </Link></Header.Subheader>
           </Grid.Column>
         </Grid>
       </Card.Content>
@@ -58,4 +67,10 @@ const Event = ({event, users}) => {
   );
 };
 
-export default Event;
+const mapStateToProps = ({firebase: {auth}}) => {
+  return{
+    uid: auth.uid
+  }
+};
+
+export default connect(mapStateToProps)(withRouter(Event));

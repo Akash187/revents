@@ -1,21 +1,12 @@
 import React from 'react';
 import UserEvent from "./UserEvent";
 
-const UserEventList = () => {
+const UserEventList = ({allEvents}) => {
+
   return (
-    <div className='user-event-list'>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-      <UserEvent/>
-    </div>
+    (allEvents.length > 0) ? <div className='user-event-list'>
+      {allEvents.map(event => <UserEvent key={event.id} event={event}/>)}
+    </div>: <div>No Events Found</div>
   );
 };
 
