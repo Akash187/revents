@@ -1,6 +1,7 @@
 import React from 'react';
 import { Comment, Form, Button } from 'semantic-ui-react';
 import moment from "moment/moment";
+import {Link} from 'react-router-dom';
 
 const SingleComment = ({tempComment, participant, uid, parentId, eventId, editId, editComment, updateComment, setEditComment, deleteComment, startEditing, cancel, replyId, replyComment, startReplying, setReplyComment, addChildComment }) => {
 
@@ -28,7 +29,9 @@ const SingleComment = ({tempComment, participant, uid, parentId, eventId, editId
 
   return (
       <Comment.Content>
-        <Comment.Author as='a'>{participant.name}</Comment.Author>
+        <Link to={`/user/${participant.id}`}>
+          <Comment.Author as='a'>{participant.name}</Comment.Author>
+        </Link>
         <Comment.Metadata>
           <div>{moment(tempComment.createdAt ? tempComment.createdAt.seconds * 1000 : new Date()).calendar(null, {
             lastWeek: 'Do MMMM YYYY, h:mm a',
