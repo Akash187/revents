@@ -21,7 +21,8 @@ const Router = (props) => {
         <NotProtectedRoute exact path='/event/:id' component={ EventDetail} />
         <ProtectedRoute exact path='/user/:id' component={ User } />
         <ProtectedRoute exact path='/people/:id' component={ People } />
-        <ProtectedRoute exact path='/createEvent' component={ CreateEditEvent } />
+        <ProtectedRoute exact path='/createEvent' component={ CreateEditEvent }/>
+        <ProtectedRoute exact path='/editEvent/:id' component={ CreateEditEvent }/>
         <ProtectedRoute path='/settings' component={ Settings } />
         <Route path="*" render = {() => <Redirect to="/" />}/>
       </Switch>

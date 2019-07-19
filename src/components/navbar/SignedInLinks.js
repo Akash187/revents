@@ -24,9 +24,9 @@ const SignedInLinks = ({profile, history, signOut, auth}) => {
           <Image circular size='mini' src={profile.images ? profile.images[0] : '/assets/user.png'} alt="logo"/>
           <Dropdown text={ profile.name || 'Random'} pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
-              <Dropdown.Item icon='plus' text='Create Event'/>
-              <Dropdown.Item icon='calendar alternate' text='My Event'/>
-              <Dropdown.Item icon='users' text='My Community'/>
+              <Dropdown.Item icon='plus' text='Create Event' onClick={() => history.push(`/createEvent`)}/>
+              <Dropdown.Item icon='calendar alternate' text='My Event' onClick={() => history.push(`/dashboard`)}/>
+              <Dropdown.Item icon='users' text='My Community' onClick={() => history.push(`/people/${auth.uid}`)}/>
               <Dropdown.Item icon='user' text='My Profile' onClick={() => history.push(`/user/${auth.uid}`)}/>
               <Dropdown.Item icon='settings' text='Setting' onClick={() => history.push('/settings/basic')}/>
               <Dropdown.Item icon='power' text='Logout' onClick={signOut}/>

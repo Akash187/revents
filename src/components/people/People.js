@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Following from "./Following";
 import Followers from "./Followers";
 import DynamicScrollToTop from "../../routes/DynamicScrollToTop";
 import {connect} from 'react-redux';
 import {Dimmer, Loader} from 'semantic-ui-react';
 
-const People = ({profile}) => {
+const People = ({profile, history, uid}) => {
+
+  useEffect(() => {
+    history.replace(`/people/${uid}`);
+  },[uid]);
+
   return (
     (profile) ?
     <div>
@@ -18,9 +23,10 @@ const People = ({profile}) => {
   );
 };
 
-const mapStateToProps = ({firebase: {profile}}) => {
+const mapStateToProps = ({firebase: {profile, auth}}) => {
   return{
-    profile
+    profile,
+    uid: auth.uid
   }
 };
 

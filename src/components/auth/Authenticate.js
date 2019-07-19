@@ -4,12 +4,16 @@ import Login from "./Login";
 import Register from "./Register";
 import {connect} from 'react-redux';
 
-const Authenticate = ({history, auth}) => {
+const Authenticate = ({history, auth, location}) => {
 
   //The setTimeout help in creating user doc before route change
   useEffect(() => {
     if(auth.uid){
-      setTimeout(() => history.goBack(),1000);
+      if(location.state){
+        setTimeout(() => history.replace(`${location.state.path}`),1000);
+      }else{
+        setTimeout(() => history.goBack(),1000);
+      }
     }
   },[auth]);
 

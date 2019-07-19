@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import {Container, Dimmer, Loader} from 'semantic-ui-react';
 import Navbar from "../components/navbar/Navbar";
 import { connect } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 
-const ProtectedRoute = ({component: Component,auth, ...rest}) => {
+const ProtectedRoute = ({component: Component,auth, history, ...rest}) => {
 
   return (
     <Route {...rest} render={
@@ -19,7 +19,11 @@ const ProtectedRoute = ({component: Component,auth, ...rest}) => {
               </Container>
             </Fragment>
           }else{
-            return <Redirect to='/authenticate'/>
+            return <Redirect to={{
+              pathname: '/authenticate',
+              state: { path: history.location.pathname }
+            }}
+            />
           }
         }else{
           return <Dimmer active inverted>
@@ -37,4 +41,4 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export default connect(mapStateToProps)(withRouter(ProtectedRoute));

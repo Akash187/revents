@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Card, Header, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {joinEvent, leaveEvent} from "../../store/actions/eventActions";
 
-const EventInfoHeader = ({id, name, about, dateTime, uid, host, attendeeList, joinEvent, leaveEvent, history}) => {
+const EventInfoHeader = ({event, id, name, about, dateTime, uid, host, attendeeList, joinEvent, leaveEvent, history}) => {
 
   return (
     <Card fluid>
@@ -21,10 +21,25 @@ const EventInfoHeader = ({id, name, about, dateTime, uid, host, attendeeList, jo
       </div>
       <Card.Content>
         {
-          !(uid) ? <Button primary onClick={() => history.push('/authenticate')}>Login To Join Event</Button> :
-          (uid === host.id) ? <Button color={'orange'}>Manage Event</Button> :
-            !(attendeeList.includes(uid)) ? <Button color='teal' onClick={() => joinEvent(id)}>Join The Event</Button> :
-            <Button color='red' onClick={() => leaveEvent(id)}>Cancel My Place</Button>
+          !(uid) ?
+            <Button primary onClick={() => history.push('/authenticate')}>
+              Login To Join Event
+            </Button> :
+          (uid === host.id) ?
+            <Button color={'orange'} onClick={() => history.push(`/editEvent/${id}`)}>
+              Manage Event
+            </Button> :
+            !(attendeeList.includes(uid)) ?
+              <Button color='teal' onClick={() => {
+                joinEvent(id);
+              }}>
+                Join The Event
+              </Button> :
+            <Button color='red' onClick={() => {
+              leaveEvent(id);
+            }}>
+              Cancel My Place
+            </Button>
         }
       </Card.Content>
     </Card>

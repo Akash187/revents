@@ -8,10 +8,10 @@ const appCode = process.env.REACT_APP_HERE_MAPS_APP_CODE;
 const EventFormLocation = ({values, touched, errors, setFieldValue}) =>{
 
   const [cityOptions, setCityOptions] = useState([]);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(values.city);
   const [cityLatLng, setCityLatLng] = useState({lat: 0, lng: 0});
   const [venueOptions, setVenueOptions] = useState([]);
-  const [venue, setVenue] = useState('');
+  const [venue, setVenue] = useState(values.venue);
   const [venueLatLng, setVenueLatLng] = useState({lat: 0, lng: 0});
   const [timeOut, setTimeOut] = useState(0);
 

@@ -26,6 +26,29 @@ const eventReducer = (state = initState, action) => {
         haveMoreEvent: action.haveMoreEvent,
         lastDocSnapshot: action.lastDocSnapshot
       };
+    case 'UPDATE_STORE_EVENTS_AND_USERS':
+      let events = [];
+      state.events.forEach(event => {
+        if(event.id !== action.event.id){
+          events.push(event);
+        }else{
+          events.push(action.event);
+        }
+      });
+      let users = state.users;
+      users[action.user.id] = action.user;
+      return{
+        ...state,
+        events,
+        users
+      };
+    case 'UPDATE_STORE_USERS':
+      let tempUsers = state.users;
+      tempUsers[action.user.id] = action.user;
+      return{
+        ...state,
+        users : tempUsers
+      };
     default:
       return state;
   }

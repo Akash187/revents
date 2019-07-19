@@ -11,7 +11,8 @@ export const addEvent = (eventDetail) => {
       ...eventDetail,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       createdBy: uid,
-      attendeeList: []
+      attendeeList: [],
+      active: true
     }).then(() => {
       toastr.success('Success', 'Event added successful.');
       dispatch({
@@ -26,7 +27,13 @@ export const addEvent = (eventDetail) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
-      window.location.reload();
+      dispatch({
+        type: 'STORE_EVENTS_AND_USERS',
+        events: [],
+        users: {},
+        haveMoreEvent: true,
+        lastDocSnapshot: {}
+      });
     }).catch((err) => {
       toastr.error('Failed to add Event.', err.message);
       dispatch({type: 'ADD_EVENT_ERROR',
@@ -38,9 +45,51 @@ export const addEvent = (eventDetail) => {
   }
 };
 
+export const updateEvent = (eventDetail, id) => {
+  return (dispatch, getState) => {
+    const uid = getState().firebase.auth.uid;
+    const profile = getState().firebase.profile;
+    dispatch({
+      type: 'FORM_SUBMITTING'
+    });
+    firestore.collection('events').doc(id).update({
+      ...eventDetail
+    }).then(() => {
+      toastr.success('Success', 'Event update successful.');
+      dispatch({
+        type: 'ADD_EVENT'
+      });
+      dispatch({
+        type: 'FORM_SUCCESS'
+      });
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+      dispatch({
+        type: 'INITIALIZE_FORM'
+      });
+      return firestore.collection('events').doc(id).get();
+    }).then((res) => {
+      dispatch({
+        type: 'UPDATE_STORE_EVENTS_AND_USERS',
+        event: {id, ...res.data()},
+        user: {id: uid, ...profile}
+      });
+    }).catch((err) => {
+      toastr.error('Failed to update Event.', err.message);
+      dispatch({type: 'ADD_EVENT_ERROR',
+        err: err.message});
+      dispatch({
+        type: 'RESET_FORM_SUBMITTING'
+      });
+    })
+  }
+};
+
 export const joinEvent = (eventId) => {
   return (dispatch, getState) => {
     const uid = getState().firebase.auth.uid;
+    const profile = getState().firebase.profile;
     dispatch({
       type: 'FORM_SUBMITTING'
     });
@@ -56,7 +105,15 @@ export const joinEvent = (eventId) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
-    }).catch((err) => {
+      return firestore.collection('events').doc(eventId).get();
+    }).then((res) => {
+      dispatch({
+        type: 'UPDATE_STORE_EVENTS_AND_USERS',
+        event: {id: eventId, ...res.data()},
+        user: {id: uid, ...profile}
+      });
+    })
+      .catch((err) => {
       toastr.error('Failed to join Event.', err.message);
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
@@ -68,6 +125,7 @@ export const joinEvent = (eventId) => {
 export const leaveEvent = (eventId) => {
   return (dispatch, getState) => {
     const uid = getState().firebase.auth.uid;
+    const profile = getState().firebase.profile;
     dispatch({
       type: 'FORM_SUBMITTING'
     });
@@ -82,6 +140,13 @@ export const leaveEvent = (eventId) => {
       });
       dispatch({
         type: 'INITIALIZE_FORM'
+      });
+      return firestore.collection('events').doc(eventId).get();
+    }).then((res) => {
+      dispatch({
+        type: 'UPDATE_STORE_EVENTS_AND_USERS',
+        event: {id: eventId, ...res.data()},
+        user: {id: uid, ...profile}
       });
     }).catch((err) => {
       toastr.error('Failed to join Event.', err.message);

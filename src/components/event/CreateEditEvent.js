@@ -3,47 +3,78 @@ import EventForm from "./EventForm";
 import { withFormik } from 'formik';
 import {object, string, date} from 'yup';
 import { connect } from 'react-redux';
-import { addEvent } from "../../store/actions/eventActions";
+import { addEvent, updateEvent } from "../../store/actions/eventActions";
+import { compose } from 'redux';
+import {firestoreConnect} from "react-redux-firebase";
 
-const CreateEditEvent = ({success, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
+const CreateEditEvent = ({success, id, action, active, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
 
   useEffect(() => {
     if(success){
-      history.push('/dashboard');
+      history.goBack();
     }
   }, [success]);
 
   return (
-    <EventForm values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } submitting={ submitting }/>
+    <EventForm action={action} active={active} values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } submitting={ submitting }/>
   );
 };
 
-const mapStateToProps = ({ event: {err}, form: {success, submitting}}) => {
+const mapStateToProps = ({ event: {err}, form: {success, submitting}, firestore: {ordered: {updateEventDoc}}}, ownprops) => {
+  let action = '';
+  let id = '';
+  if(ownprops.match && ownprops.match.path === '/createEvent'){
+    action = 'create';
+  }else{
+    action = 'update';
+    id = ownprops.match.params.id;
+  }
   return{
     err,
     success,
-    submitting
+    submitting,
+    action,
+    id,
+    event: updateEventDoc ? updateEventDoc[0] : [],
+    active: updateEventDoc ? updateEventDoc[0].active : undefined
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return{
-    addEvent: (eventDetail) => dispatch(addEvent(eventDetail))
+    addEvent: (eventDetail) => dispatch(addEvent(eventDetail)),
+    updateEvent: (eventDetail, id) => dispatch(updateEvent(eventDetail, id))
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
-  mapPropsToValues(){
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect(props => {
+    if(props.action === 'update'){
+      return [
+        {
+          collection: 'events',
+          doc: props.id,
+          storeAs: 'updateEventDoc'
+        },
+      ]
+    }else{
+      return []
+    }
+  })
+)(withFormik({
+  mapPropsToValues({action, event, id}){
     return{
-      name: '',
-      about: '',
-      detail: '',
-      city: '',
-      venue: '',
-      latLng: '',
-      dateTime: ''
+      name: event.name || '',
+      about: event.about || '',
+      detail: event.detail || '',
+      city: event.city || '',
+      venue: event.venue || '',
+      latLng: event.latLng || '',
+      dateTime: event.dateTime ? new Date(event.dateTime.seconds * 1000) : ''
     }
   },
+  enableReinitialize: true,
   validationSchema: object().shape({
     name: string().min(2, 'Too Short!')
     .max(50, 'Too Long!')
@@ -59,7 +90,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     latLng: object(),
     dateTime: date().required('Required')
   }),
-  handleSubmit(values, { props }){
-    props.addEvent(values);
+  handleSubmit(values, { props : {action, addEvent, id, updateEvent} }){
+    if(action === 'update'){
+      updateEvent(values, id);
+    }else{
+      addEvent(values);
+    }
   }
 })(CreateEditEvent));

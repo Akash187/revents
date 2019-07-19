@@ -88,12 +88,18 @@ export const setMainPhoto = (mainImage) => {
       }
     });
     firestore.collection('users').doc(uid).update({
-        images: updatedImages
-      })
-      .then(() => {
-        console.log('Image set as Main.');
-      }).catch((err) => {
-      toastr.error('Unable to set Image as Main.', err.message);
+      images: updatedImages
+    })
+    .then(() => {
+      console.log('Image set as Main.');
+      return firestore.collection('users').doc(uid).get();
+    }).then((res) => {
+      dispatch({
+        type: 'UPDATE_STORE_USERS',
+        user: {id: uid, ...res.data()}
+      });
+    }).catch((err) => {
+    toastr.error('Unable to set Image as Main.', err.message);
     });
   }
 };

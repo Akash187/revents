@@ -44,8 +44,8 @@ const AttendeeList = ({host, attendeeList, uid}) => {
               Host
             </Label>
             <Image src={host.images ? host.images[0] : '/assets/user.png'} size='tiny' style={{ marginLeft: -55}}/>
-            <Link to={uid && `/user/${host.id}`}>
-              <Header as='h3' color={uid && 'blue'} style={{ marginTop: 0, marginLeft: 10, 'cursor': (uid ? 'pointer' : 'default')}}>{host.name}</Header>
+            <Link to={`/user/${host.id}`}>
+              <Header as='h3' color={'blue'} style={{ marginTop: 0, marginLeft: 10}}>{host.name}</Header>
             </Link>
           </div>
         </Card.Content>
@@ -55,8 +55,8 @@ const AttendeeList = ({host, attendeeList, uid}) => {
             return attendee ? <Card.Content style={{padding: '14px'}} key={attendee.id}>
               <div className="attendee">
                 <Image src={attendee.images ? attendee.images[0] : '/assets/user.png'} size='tiny'/>
-                <Link to={uid && `/user/${userId}`}>
-                  <Header as='h3' color={uid && 'blue'} style={{ marginTop: 0, marginLeft: 10, 'cursor': (uid ? 'pointer' : 'default')}}>{attendee.name}</Header>
+                <Link to={`/user/${userId}`}>
+                  <Header as='h3' color={'blue'} style={{ marginTop: 0, marginLeft: 10}}>{attendee.name}</Header>
                 </Link>
               </div>
             </Card.Content> : <div/>

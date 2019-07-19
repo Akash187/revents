@@ -6,24 +6,14 @@ import { Message } from 'semantic-ui-react';
 
 const EventDatePicker = ({ setFieldValue, values, errors, touched }) => {
 
-  const [startDate, setDate] = useState(values.dateTime);
-
-  // useEffect(() => {
-  //   console.log(moment('Sat May 05 2019 02:15:00 GMT+0530 (India Standard Time)').format('MMMM Do YYYY, h:mm:ss a'));
-  // },[]);
-
   const updateDateTime = date => {
-    setDate(date);
     setFieldValue('dateTime', date);
-    // console.log(unix);
-    // let dateTime = moment(unix).format('MMMM Do YYYY, h:mm:ss a');
-    // console.log(dateTime);
   };
 
   return (
     <div>
       <DatePicker
-        selected={startDate}
+        selected={values.dateTime}
         onChange={updateDateTime}
         minDate={new Date()}
         placeholderText="Date and Time of Event"
