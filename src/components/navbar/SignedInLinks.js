@@ -25,7 +25,7 @@ const SignedInLinks = ({profile, history, signOut, auth}) => {
           <Dropdown text={ profile.name || 'Random'} pointing className='link item navbar-dropdown'>
             <Dropdown.Menu>
               <Dropdown.Item icon='plus' text='Create Event' onClick={() => history.push(`/createEvent`)}/>
-              <Dropdown.Item icon='calendar alternate' text='My Event' onClick={() => history.push(`/dashboard`)}/>
+              <Dropdown.Item icon='calendar alternate' text='My Event' onClick={() => history.push(`/user/${auth.uid}/#myEvents`)}/>
               <Dropdown.Item icon='users' text='My Community' onClick={() => history.push(`/people/${auth.uid}`)}/>
               <Dropdown.Item icon='user' text='My Profile' onClick={() => history.push(`/user/${auth.uid}`)}/>
               <Dropdown.Item icon='settings' text='Setting' onClick={() => history.push('/settings/basic')}/>

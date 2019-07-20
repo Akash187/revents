@@ -23,7 +23,7 @@ const UserEvents = ({hostEvents, guestEvents}) => {
   ];
 
   return (
-    <Card fluid>
+    <Card fluid id="myEvents">
       <Card.Content>
         <div className='user-events-header'>
           <Icon name='calendar alternate' size='big' />

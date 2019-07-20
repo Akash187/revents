@@ -37,11 +37,8 @@ const Event = ({event, users, uid, history}) => {
           </Grid.Column>
           <Grid.Column width={13}>
             <Header>{event.name}</Header>
-            <Header.Subheader>Hosted by <Link to={uid && `/user/${createdBy.id}`}>
-              <span style={{
-                'cursor': (uid ? 'pointer' : 'default'),
-                'color' : (uid ? 'blue' : 'black')
-              }}>
+            <Header.Subheader>Hosted by <Link to={`/user/${createdBy.id}`}>
+              <span>
                 {createdBy && createdBy.name}
               </span>
               </Link></Header.Subheader>
