@@ -1,4 +1,4 @@
-import {auth, firebase, firestore} from "../../config/fbConfig";
+import {auth, firebase, firestore, provider} from "../../config/fbConfig";
 import {toastr} from 'react-redux-toastr';
 
 export const signIn = (credentials) => {
@@ -11,6 +11,25 @@ export const signIn = (credentials) => {
     }).catch((err) => {
       toastr.error('Failed to Login.', `Email and Password didn't Match.`);
       dispatch({type: 'LOGIN_ERROR', err})
+    });
+  }
+};
+
+export const googleSignIn = () => {
+  return (dispatch, getState) => {
+    auth.signInWithPopup(provider).then(function(result) {
+      return result;
+    }).then((result) => {
+      if(result.additionalUserInfo.isNewUser){
+        firestore.collection('users').doc(result.user.uid).set({
+          name: result.additionalUserInfo.profile.name,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          images: firebase.firestore.FieldValue.arrayUnion(result.additionalUserInfo.profile.picture)
+        });
+      }
+    }).catch(function(error) {
+      console.log(error);
+      toastr.error('Failed to SignIn', error.message);
     });
   }
 };

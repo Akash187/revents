@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { signIn} from "../../store/actions/authActions";
+import { signIn, googleSignIn} from "../../store/actions/authActions";
 
-const Login = ({ signIn, trigger }) => {
+const Login = ({ signIn, trigger, googleSignIn }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,7 +41,7 @@ const Login = ({ signIn, trigger }) => {
               <Icon name='facebook' /> Login with Facebook
             </Button>
             <br/>
-            <Button color='google plus' fluid>
+            <Button color='google plus' onClick={googleSignIn} fluid>
               <Icon name='google plus' /> Login with Google
             </Button>
           </Card.Content>
@@ -53,7 +53,8 @@ const Login = ({ signIn, trigger }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    signIn: (credentials) => dispatch(signIn(credentials))
+    signIn: (credentials) => dispatch(signIn(credentials)),
+    googleSignIn: (credentials) => dispatch(googleSignIn(credentials))
   }
 };
 

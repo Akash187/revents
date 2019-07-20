@@ -105,6 +105,7 @@ export const setMainPhoto = (mainImage) => {
 };
 
 export const deletePhoto = (image) => {
+  console.log(image);
   return (dispatch, getState) => {
     const storageRef = storage.ref('images');
     //Extract fileName from image url
@@ -118,7 +119,14 @@ export const deletePhoto = (image) => {
     .then(() => {
       console.log('Image deleted successfully.');
     }).catch((err) => {
-    toastr.error('Unable to delete Image.', err.message);
+      //below code will delete the image which is not stored in firebase storage
+      if(err.code === "storage/unauthorized"){
+        firestore.collection('users').doc(uid).update({
+          images: firebase.firestore.FieldValue.arrayRemove(image)
+        })
+      }else{
+        toastr.error('Unable to delete Image.', err.message);
+      }
     });
   }
 };

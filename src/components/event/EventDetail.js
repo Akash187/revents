@@ -60,7 +60,6 @@ const EventDetail = ({event, match, uid, profile, attendeeList, updateStoreEvent
 
   useEffect(() => {
     if(event) {
-      console.log(event);
       updateStoreEventsAndUsers(event, {[host.id]: host, ...attendees});
     }
   },[event]);

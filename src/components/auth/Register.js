@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { signUp } from "../../store/actions/authActions";
+import {googleSignIn, signUp} from "../../store/actions/authActions";
 import { withRouter } from "react-router-dom";
 
-const Register = ({history, signUp, trigger }) => {
+const Register = ({history, signUp, trigger, googleSignIn }) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ const Register = ({history, signUp, trigger }) => {
               <Icon name='facebook' /> Login with Facebook
             </Button>
             <br/>
-            <Button color='google plus' fluid>
+            <Button color='google plus' onClick={googleSignIn} fluid>
               <Icon name='google plus' /> Login with Google
             </Button>
           </Card.Content>
@@ -60,7 +60,8 @@ const Register = ({history, signUp, trigger }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    signUp: (newUser) => dispatch(signUp(newUser))
+    signUp: (newUser) => dispatch(signUp(newUser)),
+    googleSignIn: (credentials) => dispatch(googleSignIn(credentials))
   }
 };
 
