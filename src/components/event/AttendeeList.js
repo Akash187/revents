@@ -1,36 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Card, Segment, Header, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import {firestore} from "../../config/fbConfig";
 import {connect} from 'react-redux';
 
-const AttendeeList = ({host, attendeeList, eventConcluded}) => {
-
-  const [attendees, setAttendees] = useState({});
-
-  useEffect(() => {
-    if(attendeeList.length > 0) {
-      let promises = attendeeList.map(async (userId) => {
-        if (!(userId in attendees)) {
-          let doc = await firestore.collection("users").doc(userId).get();
-          return new Promise((res, rej) => res({id: userId, ...doc.data()}))
-        } else {
-          return new Promise((res, rej) => res(attendees[userId]))
-        }
-      });
-
-      Promise.all(promises)
-        .then((results) => {
-          let users = {};
-          results.forEach(result => {
-            users[result.id] = result
-          });
-          setAttendees(users);
-        });
-    }else{
-      setAttendees({});
-    }
-  }, [attendeeList]);
+const AttendeeList = ({host, attendeeList, attendees, eventConcluded}) => {
 
   return (
     <div className='notification'>

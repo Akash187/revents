@@ -66,12 +66,6 @@ export const updateEvent = (eventDetail, id) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
-      return firestore.collection('events').doc(id).get();
-    }).then((res) => {
-      dispatch({
-        type: 'UPDATE_STORE_EVENTS',
-        event: {id, ...res.data()}
-      });
     }).catch((err) => {
       toastr.error('Failed to update Event.', err.message);
       dispatch({
@@ -99,12 +93,6 @@ export const cancelEvent = (id) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
-      return firestore.collection('events').doc(id).get();
-    }).then((res) => {
-      dispatch({
-        type: 'UPDATE_STORE_EVENTS',
-        event: {id, ...res.data()}
-      });
     }).catch((err) => {
       console.log(err);
       toastr.error('Failed to cancel Event.', err.message);
@@ -118,7 +106,6 @@ export const cancelEvent = (id) => {
 export const joinEvent = (eventId) => {
   return (dispatch, getState) => {
     const uid = getState().firebase.auth.uid;
-    const profile = getState().firebase.profile;
     dispatch({
       type: 'FORM_SUBMITTING'
     });
@@ -134,15 +121,8 @@ export const joinEvent = (eventId) => {
       dispatch({
         type: 'INITIALIZE_FORM'
       });
-      return firestore.collection('events').doc(eventId).get();
-    }).then((res) => {
-      dispatch({
-        type: 'UPDATE_STORE_EVENTS_AND_USERS',
-        event: {id: eventId, ...res.data()},
-        user: {id: uid, ...profile}
-      });
     })
-      .catch((err) => {
+    .catch((err) => {
       toastr.error('Failed to join Event.', err.message);
       dispatch({
         type: 'RESET_FORM_SUBMITTING'
@@ -168,12 +148,6 @@ export const leaveEvent = (eventId) => {
       });
       dispatch({
         type: 'INITIALIZE_FORM'
-      });
-      return firestore.collection('events').doc(eventId).get();
-    }).then((res) => {
-      dispatch({
-        type: 'UPDATE_STORE_EVENTS',
-        event: {id: eventId, ...res.data()}
       });
     }).catch((err) => {
       toastr.error('Failed to join Event.', err.message);
@@ -284,5 +258,13 @@ export const storeEventsAndUsers = (events, users, haveMoreEvent, lastDocSnapsho
     users,
     haveMoreEvent,
     lastDocSnapshot
+  }
+};
+
+export const updateStoreEventsAndUsers = (event, users) => {
+  return {
+    type: 'UPDATE_STORE_EVENTS_AND_USERS',
+    event,
+    users
   }
 };

@@ -47,6 +47,7 @@ const EventComment = ({history, addParentComment, addChildComment, eventId, even
 
   const startEditing = (comment, id) => {
     setEditId(id);
+    setReplyId('');
     setComment('');
     setReplyComment('');
     setEditComment(comment);
@@ -82,7 +83,9 @@ const EventComment = ({history, addParentComment, addChildComment, eventId, even
                   uid={uid}
                   parentId={tempComment.id}
                   editId={editId}
+                  setEditId={setEditId}
                   replyId={replyId}
+                  setReplyId={setReplyId}
                   eventId={eventId}
                   tempComment={tempComment}
                   participant={participant}
@@ -107,7 +110,9 @@ const EventComment = ({history, addParentComment, addChildComment, eventId, even
                         uid={uid}
                         parentId={tempComment.id}
                         editId={editId}
+                        setEditId={setEditId}
                         replyId={replyId}
+                        setReplyId={setReplyId}
                         eventId={eventId}
                         tempComment={childTempComment}
                         participant={participant}

@@ -3,12 +3,14 @@ import { Comment, Form, Button } from 'semantic-ui-react';
 import moment from "moment/moment";
 import {Link} from 'react-router-dom';
 
-const SingleComment = ({tempComment, participant, uid, parentId, eventId, editId, editComment, updateComment, setEditComment, deleteComment, startEditing, cancel, replyId, replyComment, startReplying, setReplyComment, addChildComment }) => {
+const SingleComment = ({tempComment, participant, uid, parentId, eventId, setEditId, setReplyId, editId, editComment, updateComment, setEditComment, deleteComment, startEditing, cancel, replyId, replyComment, startReplying, setReplyComment, addChildComment }) => {
 
   const reply = () => {
     if(replyComment.length > 0){
       addChildComment(replyComment, eventId, parentId);
       cancel();
+    }else{
+      setReplyId('');
     }
   };
 
@@ -16,6 +18,8 @@ const SingleComment = ({tempComment, participant, uid, parentId, eventId, editId
     if(editComment.length > 0){
       updateComment(comment, id);
       cancel();
+    }else{
+      setEditId('');
     }
   };
 
