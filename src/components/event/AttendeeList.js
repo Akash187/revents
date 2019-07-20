@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {firestore} from "../../config/fbConfig";
 import {connect} from 'react-redux';
 
-const AttendeeList = ({host, attendeeList, uid}) => {
+const AttendeeList = ({host, attendeeList, eventConcluded}) => {
 
   const [attendees, setAttendees] = useState({});
 
@@ -36,7 +36,7 @@ const AttendeeList = ({host, attendeeList, uid}) => {
     <div className='notification'>
       <Card fluid>
         <Segment inverted size='large' color='teal' style={{ marginBottom: 0 }}>
-          <Header as='h5' textAlign='center'>{`${attendeeList.length + 1} People Going`}</Header>
+          <Header as='h5' textAlign='center'>{`${attendeeList.length + 1} People ${eventConcluded ? 'attended' : 'going'}`}</Header>
         </Segment>
         <Card.Content>
           <div className="attendee">

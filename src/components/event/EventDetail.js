@@ -6,14 +6,23 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import {firestore} from "../../config/fbConfig";
+import moment from "moment/moment";
 
 const EventDetail = ({event, match}) => {
 
   const [host, setHost] = useState({});
+  const [eventConcluded, setEventConcluded] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   },[]);
+
+  useEffect(() => {
+    if(event){
+      let now = moment();
+      setEventConcluded(moment(event.dateTime.seconds * 1000).isBefore(now));
+    }
+  },[event]);
 
   useEffect(() => {
     if(event){
@@ -28,10 +37,10 @@ const EventDetail = ({event, match}) => {
       {(event && event.id === match.params.id) ?
         <Grid>
           <Grid.Column mobile={16} computer={10}>
-            <EventInfo event={event} host={host}/>
+            <EventInfo eventConcluded={eventConcluded} event={event} host={host}/>
           </Grid.Column>
           <Grid.Column mobile={16} computer={6}>
-            <AttendeeList host={host} attendeeList={event.attendeeList ? event.attendeeList : []}/>
+            <AttendeeList eventConcluded={eventConcluded} host={host} attendeeList={event.attendeeList ? event.attendeeList : []}/>
           </Grid.Column>
         </Grid>:
         <Loader active/> }

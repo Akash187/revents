@@ -5,38 +5,40 @@ import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {joinEvent, leaveEvent} from "../../store/actions/eventActions";
 
-const EventInfoHeader = ({event, id, name, about, dateTime, uid, host, attendeeList, joinEvent, leaveEvent, history}) => {
+const EventInfoHeader = ({event, uid, host, attendeeList, joinEvent, leaveEvent, history, eventConcluded}) => {
 
   return (
     <Card fluid>
-      <div className='eventInfo-head' style ={ { backgroundImage: `url('/assets/categoryImages/${about}.jpg')`} }>
+      <div className='eventInfo-head' style ={ { backgroundImage: `url('/assets/categoryImages/${event.about}.jpg')`} }>
         <Header
           inverted
           as = 'h1'
-          content={name}
-          subheader= {moment(dateTime*1000).format('dddd Do MMMM')}/>
+          content={event.name}
+          subheader= {moment(event.dateTime*1000).format('dddd Do MMMM')}/>
         <Header.Subheader
           content={`Hosted by ${host.name}`}
         />
       </div>
       <Card.Content>
         {
+          !(event.active) ? <Button disabled color='red'>Event Cancelled</Button> :
+          (eventConcluded) ? <Button disabled color="teal">Event Concluded</Button> :
           !(uid) ?
             <Button primary onClick={() => history.push('/authenticate')}>
               Login To Join Event
             </Button> :
           (uid === host.id) ?
-            <Button color={'orange'} onClick={() => history.push(`/editEvent/${id}`)}>
+            <Button color={'orange'} onClick={() => history.push(`/editEvent/${event.id}`)}>
               Manage Event
             </Button> :
             !(attendeeList.includes(uid)) ?
               <Button color='teal' onClick={() => {
-                joinEvent(id);
+                joinEvent(event.id);
               }}>
                 Join The Event
               </Button> :
             <Button color='red' onClick={() => {
-              leaveEvent(id);
+              leaveEvent(event.id);
             }}>
               Cancel My Place
             </Button>

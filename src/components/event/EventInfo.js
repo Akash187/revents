@@ -3,13 +3,13 @@ import EventMoreInfo from "./EventMoreInfo";
 import EventComment from "./EventComment";
 import EventInfoHeader from './EventInfoHeader';
 
-const EventInfo = ({event, host}) => {
+const EventInfo = ({event, host, eventConcluded}) => {
 
   return (
     <div>
-      <EventInfoHeader event={event} id={event.id} name={event.name} dateTime={event.dateTime.seconds} about={event.about} host={host} attendeeList={event.attendeeList ? event.attendeeList : []}/>
+      <EventInfoHeader event={event} host={host} eventConcluded={eventConcluded} attendeeList={event.attendeeList ? event.attendeeList : []}/>
       <EventMoreInfo detail={event.detail} venue={event.venue} dateTime={event.dateTime.seconds} latLng={event.latLng}/>
-      <EventComment eventId={event.id} comments={event.comments || []}/>
+      <EventComment eventId={event.id} eventConcluded={eventConcluded} comments={event.comments || []}/>
     </div>
   );
 };

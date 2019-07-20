@@ -3,11 +3,11 @@ import EventForm from "./EventForm";
 import { withFormik } from 'formik';
 import {object, string, date} from 'yup';
 import { connect } from 'react-redux';
-import { addEvent, updateEvent } from "../../store/actions/eventActions";
+import { addEvent, updateEvent, cancelEvent } from "../../store/actions/eventActions";
 import { compose } from 'redux';
 import {firestoreConnect} from "react-redux-firebase";
 
-const CreateEditEvent = ({success, id, action, active, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting}) => {
+const CreateEditEvent = ({success, id, active, action, history, addEvent, values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting, cancelEvent}) => {
 
   useEffect(() => {
     if(success){
@@ -15,8 +15,14 @@ const CreateEditEvent = ({success, id, action, active, history, addEvent, values
     }
   }, [success]);
 
+  useEffect(() => {
+    if(!active){
+      history.goBack();
+    }
+  }, [active]);
+
   return (
-    <EventForm action={action} active={active} values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } submitting={ submitting }/>
+    <EventForm action={action} values={values} handleChange={handleChange} handleSubmit={handleSubmit} setFieldValue={setFieldValue} errors={ errors } touched={ touched } submitting={ submitting } cancelEvent={cancelEvent} id={id}/>
   );
 };
 
@@ -36,14 +42,15 @@ const mapStateToProps = ({ event: {err}, form: {success, submitting}, firestore:
     action,
     id,
     event: updateEventDoc ? updateEventDoc[0] : [],
-    active: updateEventDoc ? updateEventDoc[0].active : undefined
+    active: updateEventDoc ? updateEventDoc[0].active : true
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return{
     addEvent: (eventDetail) => dispatch(addEvent(eventDetail)),
-    updateEvent: (eventDetail, id) => dispatch(updateEvent(eventDetail, id))
+    updateEvent: (eventDetail, id) => dispatch(updateEvent(eventDetail, id)),
+    cancelEvent: (id) => dispatch(cancelEvent(id))
   }
 };
 

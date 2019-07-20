@@ -2,9 +2,10 @@ import React from 'react';
 import { Grid, Card, Form, Header, Button, Message } from 'semantic-ui-react';
 import EventFormLocation from './EventFormLocation';
 import EventDatePicker from "./EventDatePicker";
-import { Link } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import {toastr} from 'react-redux-toastr';
 
-const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, touched, submitting }) => {
+const EventForm = ({values, history, action, handleChange, handleSubmit, setFieldValue, errors, touched, submitting, cancelEvent, id }) => {
 
   const options = [
     {text: 'Culture', value: 'culture'},
@@ -14,6 +15,15 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
     {text: 'Music', value: 'music'},
     {text: 'Travel', value: 'travel'},
   ];
+
+  const eventCancel = (e) => {
+    e.preventDefault();
+    const toastrConfirmOptions = {
+      onOk: () => cancelEvent(id),
+      onCancel: () => console.log('CANCEL: clicked')
+    };
+    toastr.confirm('You are about to cancel Event. This action cannot be reverted.', toastrConfirmOptions);
+  };
 
   return (
     <Grid columns={1}>
@@ -42,8 +52,9 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
               <Header color='teal' size='medium' content='EVENT LOCATION DETAILS'/>
               <EventFormLocation values={values} touched={touched} errors={errors} setFieldValue={setFieldValue}/>
               <EventDatePicker touched={touched} values={values} errors={errors} setFieldValue={setFieldValue}/>
-              <Button type='submit' positive loading={submitting}>Submit</Button>
-              <Link to='/dashboard'><Button>Cancel</Button></Link>
+              <Button type='submit' positive loading={submitting}>{action !== 'update' ? 'Create' : 'Update'}</Button>
+              <Button onClick={(e) => { e.preventDefault(); history.goBack();}}>Cancel</Button>
+              {action === 'update' && <Button onClick={eventCancel} color='red' floated={'right'}>Cancel</Button>}
             </Form>
           </Card.Content>
         </Card>
@@ -52,4 +63,4 @@ const EventForm = ({values, handleChange, handleSubmit, setFieldValue, errors, t
   );
 };
 
-export default EventForm;
+export default withRouter(EventForm);

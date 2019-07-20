@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Grid, Image, Header, Icon, Button } from 'semantic-ui-react';
+import React, {useEffect, useState} from 'react';
+import { Card, Grid, Image, Header, Icon, Button, Label } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import LazyLoad from 'react-lazyload';
 import moment from 'moment';
@@ -11,9 +11,24 @@ const Event = ({event, users, uid, history}) => {
   const createdBy = users[event.createdBy];
   const attendeeList = event.attendeeList;
 
+  const [eventConcluded, setEventConcluded] = useState(false);
+
+  useEffect(() => {
+    if(event){
+      let now = moment();
+      setEventConcluded(moment(event.dateTime.seconds * 1000).isBefore(now));
+    }
+  },[event]);
+
+
   return (
-    <Card fluid>
+    <Card fluid style={{marginBottom: '2rem !important'}}>
       <Card.Content>
+        {(event.active) ? (eventConcluded) &&  <Label as='a' color='teal' ribbon='right'>
+          Event Concluded
+        </Label> : <Label as='a' color='orange' ribbon='right'>
+          Event Cancelled
+        </Label>}
         <Grid columns={2}>
           <Grid.Column width={3}>
             <LazyLoad>
