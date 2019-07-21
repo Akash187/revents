@@ -4,16 +4,12 @@ import Login from "./Login";
 import Register from "./Register";
 import {connect} from 'react-redux';
 
-const Authenticate = ({history, auth, location}) => {
+const Authenticate = ({history, auth, unprotectedPrevRoute, protectedPrevRoute}) => {
 
   //The setTimeout help in creating user doc before route change
   useEffect(() => {
     if(auth.uid){
-      if(location.state){
-        setTimeout(() => history.replace(`${location.state.path}`),1000);
-      }else{
-        setTimeout(() => history.goBack(),1000);
-      }
+      setTimeout(() => history.replace(protectedPrevRoute),1000);
     }
   },[auth]);
 
@@ -37,7 +33,7 @@ const Authenticate = ({history, auth, location}) => {
           <Card.Description>
             Or click cancel to continue as a guest.
           </Card.Description>
-          <Button style={{ margin: '1rem 0'}} onClick={() => history.goBack()}>Cancel</Button>
+          <Button style={{ margin: '1rem 0'}} onClick={() => history.replace(unprotectedPrevRoute)}>Cancel</Button>
         </Card.Content>
       </Card>
     </div>
@@ -46,7 +42,9 @@ const Authenticate = ({history, auth, location}) => {
 
 const mapStateToProps = (state) => {
   return{
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    unprotectedPrevRoute: state.route.unprotectedPrevRoute,
+    protectedPrevRoute: state.route.protectedPrevRoute
   }
 };
 

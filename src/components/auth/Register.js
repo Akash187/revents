@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {googleSignIn, signUp} from "../../store/actions/authActions";
+import {googleSignIn, signUp, facebookSignIn} from "../../store/actions/authActions";
 import { withRouter } from "react-router-dom";
 
-const Register = ({history, signUp, trigger, googleSignIn }) => {
+const Register = ({history, signUp, trigger, googleSignIn, facebookSignIn, submitting}) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,10 +41,10 @@ const Register = ({history, signUp, trigger, googleSignIn }) => {
               <Form.Field>
                 <input type="password" value={password} id="password" placeholder="Password" pattern="[a-zA-Z0-9~!@#$%^&*]{6,}" title="Password must be atleast 6 characters. May contain letters, number or special characters." onChange={handleChange} required/>
               </Form.Field>
-              <Button color='blue' fluid>Register</Button>
+              <Button color='blue' loading={submitting} fluid>Register</Button>
             </Form>
             <Divider horizontal>Or</Divider>
-            <Button color='facebook' fluid>
+            <Button color='facebook' onClick={facebookSignIn} fluid>
               <Icon name='facebook' /> Login with Facebook
             </Button>
             <br/>
@@ -58,11 +58,19 @@ const Register = ({history, signUp, trigger, googleSignIn }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = ({form: {submitting}}) => {
   return{
-    signUp: (newUser) => dispatch(signUp(newUser)),
-    googleSignIn: (credentials) => dispatch(googleSignIn(credentials))
+    submitting
   }
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Register));
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    signUp: (newUser) => dispatch(signUp(newUser)),
+    googleSignIn: () => dispatch(googleSignIn()),
+    facebookSignIn: () => dispatch(facebookSignIn())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));

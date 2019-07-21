@@ -4,7 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = ({profile, history, signOut, auth}) => {
+const SignedInLinks = ({profile, history, signOut, auth, unprotectedPrevRoute}) => {
   return (
     <Fragment>
       <Menu.Item>
@@ -29,7 +29,7 @@ const SignedInLinks = ({profile, history, signOut, auth}) => {
               <Dropdown.Item icon='users' text='My Community' onClick={() => history.push(`/people/${auth.uid}`)}/>
               <Dropdown.Item icon='user' text='My Profile' onClick={() => history.push(`/user/${auth.uid}`)}/>
               <Dropdown.Item icon='settings' text='Setting' onClick={() => history.push('/settings/basic')}/>
-              <Dropdown.Item icon='power' text='Logout' onClick={signOut}/>
+              <Dropdown.Item icon='power' text='Logout' onClick={() => {signOut(); history.replace(unprotectedPrevRoute)}}/>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
@@ -38,10 +38,11 @@ const SignedInLinks = ({profile, history, signOut, auth}) => {
   );
 };
 
-const mapStateToProps = ({firebase: { profile, auth }}) => {
+const mapStateToProps = ({firebase: { profile, auth }, route}) => {
   return{
     profile,
-    auth
+    auth,
+    unprotectedPrevRoute: route.unprotectedPrevRoute,
   };
 };
 

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { Modal, Card, Form, Button, Divider, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { signIn, googleSignIn} from "../../store/actions/authActions";
+import { signIn, googleSignIn, facebookSignIn} from "../../store/actions/authActions";
 
-const Login = ({ signIn, trigger, googleSignIn }) => {
+const Login = ({ signIn, trigger, googleSignIn, facebookSignIn, submitting }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,10 +34,10 @@ const Login = ({ signIn, trigger, googleSignIn }) => {
               <Form.Field>
                 <input type="password" value={password} id="password" placeholder="Password" onChange={handleChange}/>
               </Form.Field>
-              <Button positive fluid>Login</Button>
+              <Button positive loading={submitting} fluid>Login</Button>
             </Form>
             <Divider horizontal>Or</Divider>
-            <Button color='facebook' fluid>
+            <Button color='facebook' onClick={facebookSignIn} fluid>
               <Icon name='facebook' /> Login with Facebook
             </Button>
             <br/>
@@ -51,11 +51,18 @@ const Login = ({ signIn, trigger, googleSignIn }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = ({form: {submitting}}) => {
   return{
-    signIn: (credentials) => dispatch(signIn(credentials)),
-    googleSignIn: (credentials) => dispatch(googleSignIn(credentials))
+    submitting
   }
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return{
+    signIn: (credentials) => dispatch(signIn(credentials)),
+    googleSignIn: () => dispatch(googleSignIn()),
+    facebookSignIn: () => dispatch(facebookSignIn())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
