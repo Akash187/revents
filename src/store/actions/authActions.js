@@ -129,11 +129,11 @@ export const updatePassword = (newPassword) => {
       });
       if(error.code === "auth/requires-recent-login"){
         const toastrOptions = {
-          timeOut: 0, // by setting to 0 it will prevent the auto close
+          timeOut: 0,
           position: "top-left",
-          showCloseButton: true, // false by default
-          closeOnToastrClick: true, // false by default, this will close the toastr when user clicks on it
-          component: ( // this option will give you a func 'remove' as props
+          showCloseButton: true,
+          closeOnToastrClick: true,
+          component: (
             <span>You need to Re-login to update password.</span>
           )
         };

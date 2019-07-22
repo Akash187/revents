@@ -256,5 +256,10 @@ code {
     margin-top: 0.5rem;
 }
 
+.notification-img{
+    display: flex !important;
+    align-items: center !important;
+}
+
 
 

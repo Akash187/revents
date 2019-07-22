@@ -1,8 +1,12 @@
 import React from 'react';
 import { Card, Feed } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import {compose} from "redux";
+import moment from 'moment';
 
-const Notification = () => {
+const Notification = ({notifications}) => {
 
   return (
     <div className='notification'>
@@ -12,41 +16,17 @@ const Notification = () => {
         </Card.Content>
         <Card.Content>
           <Feed size='large'>
-            <Feed.Event>
-              <Feed.Label image='/assets/user.png' />
+            {notifications && notifications.map(notification => <Feed.Event key={notification.id}>
+              <Feed.Label className="notification-img" image={notification.image} />
               <Feed.Content>
                 <Feed.Summary>
-                  You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
+                  {notification.content}! <Link to={`/user/${notification.userId}`}>{notification.userName}</Link> {notification.content === 'New Event' ? 'is hosting' : 'has cancelled'} <Link to={`/event/${notification.eventId}`}>{notification.eventName}</Link>.
                 </Feed.Summary>
                 <Feed.Meta>
-                  <Feed.Date content='1 day ago' />
+                  <Feed.Date content={moment(notification.addedAt.toDate()).fromNow()} />
                 </Feed.Meta>
               </Feed.Content>
-            </Feed.Event>
-
-            <Feed.Event>
-              <Feed.Label image='/assets/user.png' />
-              <Feed.Content>
-                <Feed.Summary>
-                  You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
-                </Feed.Summary>
-                <Feed.Meta>
-                  <Feed.Date content='1 day ago' />
-                </Feed.Meta>
-              </Feed.Content>
-            </Feed.Event>
-
-            <Feed.Event>
-              <Feed.Label image='/assets/user.png' />
-              <Feed.Content>
-                <Feed.Summary>
-                  You added <Link to='/'>Jenny Hess</Link> to your <Link to='/'>coworker</Link> group.
-                </Feed.Summary>
-                <Feed.Meta>
-                  <Feed.Date content='1 day ago' />
-                </Feed.Meta>
-              </Feed.Content>
-            </Feed.Event>
+            </Feed.Event>)}
           </Feed>
         </Card.Content>
       </Card>
@@ -54,4 +34,19 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+const mapStateToProps = ({firestore : {ordered}}) => {
+  return{
+    notifications : ordered.notifications ? ordered.notifications : []
+  }
+};
+
+export default compose(
+  connect(mapStateToProps, null),
+  firestoreConnect(props => [
+    {
+      collection: 'notifications',
+      orderBy: ['addedAt', 'desc'],
+      limit: 5
+    },
+  ])
+)(Notification);
