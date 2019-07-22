@@ -33,7 +33,7 @@ const EventForm = ({values, history, action, handleChange, handleSubmit, setFiel
             <Form onSubmit={handleSubmit}>
               <Header style={{marginTop: 0}} color='teal' size='medium' content='EVENT DETAILS'/>
               <Form.Field>
-                <input placeholder='Give your event a name' name='name' value={values.name} onChange={handleChange}/>
+                <input placeholder='Give your event a name' name='name' disabled={action === 'update'} value={values.name} onChange={handleChange}/>
               </Form.Field>
               {errors.name && touched.name && <Message
                 size='mini'

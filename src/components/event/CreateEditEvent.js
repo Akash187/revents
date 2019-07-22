@@ -71,14 +71,25 @@ export default compose(
   })
 )(withFormik({
   mapPropsToValues({action, event, id}){
+    if(action === 'update'){
+      return{
+        name: event.name || '',
+        about: event.about || '',
+        detail: event.detail || '',
+        city: event.city || '',
+        venue: event.venue || '',
+        latLng: event.latLng || '',
+        dateTime: event.dateTime ? new Date(event.dateTime.seconds * 1000) : ''
+      }
+    }
     return{
-      name: event.name || '',
-      about: event.about || '',
-      detail: event.detail || '',
-      city: event.city || '',
-      venue: event.venue || '',
-      latLng: event.latLng || '',
-      dateTime: event.dateTime ? new Date(event.dateTime.seconds * 1000) : ''
+      name: '',
+      about: '',
+      detail: '',
+      city: '',
+      venue: '',
+      latLng: '',
+      dateTime: ''
     }
   },
   enableReinitialize: true,

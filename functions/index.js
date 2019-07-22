@@ -35,12 +35,12 @@ exports.eventCreated = functions.firestore
       });
   });
 
-exports.cancelEvent = functions.firestore
+exports.updateEvent = functions.firestore
   .document('events/{eventId}')
   .onUpdate((change, context) => {
     const tempEvent = change.after.data();
+    const eventId = context.params.eventId;
     if(!tempEvent.active){
-      const eventId = context.params.eventId;
       return admin.firestore()
         .collection('users')
         .doc(tempEvent.createdBy)
@@ -49,6 +49,24 @@ exports.cancelEvent = functions.firestore
           const tempUser = user.data();
           const notification = {
             content: 'Event Cancelled',
+            eventId: eventId,
+            eventName: tempEvent.name,
+            userId: tempEvent.createdBy,
+            userName: tempUser.name,
+            image: tempUser.images ? tempUser.images[0] : '/assets/user.png',
+            addedAt: admin.firestore.FieldValue.serverTimestamp()
+          };
+          return createNotification(notification);
+        });
+    }else{
+      return admin.firestore()
+        .collection('users')
+        .doc(tempEvent.createdBy)
+        .get()
+        .then(user => {
+          const tempUser = user.data();
+          const notification = {
+            content: 'Event Updated',
             eventId: eventId,
             eventName: tempEvent.name,
             userId: tempEvent.createdBy,

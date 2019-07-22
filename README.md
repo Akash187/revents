@@ -19,7 +19,7 @@ This project was built to practice my ReactJS, Redux and Firebase Skill. It is a
 
 ## How to Load the App
 
-You can run a hosted version of the app at [https://revents.netlify.com/](https://revents.netlify.com/)
+You can run a hosted version of the app at [https://re-events.netlify.com/](https://re-events.netlify.com/)
 
 The project uses Node.js and the Create-React-App starter. If you do not have Node >= 6.x installed, you can download it here: [Node.js](https://nodejs.org/en/)
 

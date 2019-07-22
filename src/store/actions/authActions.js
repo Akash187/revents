@@ -39,7 +39,6 @@ export const googleSignIn = () => {
         });
       }
     }).catch(function(error) {
-      console.log(error);
       toastr.error('Failed to SignIn', error.message);
     });
   }
@@ -61,7 +60,6 @@ export const facebookSignIn = () => {
         });
       }
     }).catch(function(error) {
-      console.log(error);
       toastr.error('Failed to SignIn', error.message);
     });
   }

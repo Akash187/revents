@@ -20,7 +20,10 @@ const Notification = ({notifications}) => {
               <Feed.Label className="notification-img" image={notification.image} />
               <Feed.Content>
                 <Feed.Summary>
-                  {notification.content}! <Link to={`/user/${notification.userId}`}>{notification.userName}</Link> {notification.content === 'New Event' ? 'is hosting' : 'has cancelled'} <Link to={`/event/${notification.eventId}`}>{notification.eventName}</Link>.
+                  {notification.content}!
+                  <Link to={`/user/${notification.userId}`}> {notification.userName} </Link>
+                  {notification.content === 'New Event' ? 'is hosting' : notification.content === 'Event Cancelled' ? 'has cancelled' : 'has updated'}
+                  <Link to={`/event/${notification.eventId}`}> {notification.eventName}</Link>.
                 </Feed.Summary>
                 <Feed.Meta>
                   <Feed.Date content={moment(notification.addedAt.toDate()).fromNow()} />
