@@ -22,7 +22,7 @@ const BasicSetting = ({values, handleChange, handleSubmit, setFieldValue, errors
     setCity(query);
     if(query.length > 2) {
       setTimeOut(setTimeout(() => {
-        fetch(`http://autocomplete.geocoder.api.here.com/6.2/suggest.json?query=${query}&app_id=${appId}&app_code=${appCode}`)
+        fetch(`https://autocomplete.geocoder.api.here.com/6.2/suggest.json?query=${query}&app_id=${appId}&app_code=${appCode}`)
           .then(res => res.json())
           .then(async res => {
             let suggestedCities = res.suggestions.map((suggestion, index) => (
