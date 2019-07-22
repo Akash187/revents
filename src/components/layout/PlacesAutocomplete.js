@@ -13,7 +13,7 @@ const menuStyle = {
   position: 'fixed',
   bottom: '5%',
   overflow: 'auto', // TODO: don't cheat, let it flow to the bottom
-  maxHeight: '160px'
+  maxHeight: '120px'
 };
 
 const PlacesAutoComplete = ({items, placeholder, value, onChange, onSelect}) =>{
@@ -30,7 +30,7 @@ const PlacesAutoComplete = ({items, placeholder, value, onChange, onSelect}) =>{
         renderItem={(item, highlighted) =>
           <div
             key={item.id}
-            style={{ backgroundColor: highlighted ? '#eee' : 'transparent', padding: '10px 8px', borderBottom: '1px solid rgba(0, 0, 0, 0.2)'}}
+            style={{ backgroundColor: highlighted ? '#eee' : 'transparent', padding: '4px', borderBottom: '1px solid rgba(0, 0, 0, 0.2)'}}
           >
             {item.label}
           </div>

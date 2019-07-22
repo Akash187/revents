@@ -99,7 +99,7 @@ export default compose(
     .required('Required'),
     about: string().required('Required'),
     detail: string().min(5, 'Too Short!')
-      .max(500, 'Detail must not be more than 200 character')
+      .max(1000, 'Detail must not be more than 1000 character')
       .required('Required'),
     city: string().min(5, 'Too Short!')
       .required('Required'),

@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazyload';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import Truncate from 'react-truncate';
 
 const Event = ({event, users, uid, history}) => {
 
@@ -65,7 +66,9 @@ const Event = ({event, users, uid, history}) => {
         <Grid columns={2}>
           <Grid.Column width={13}>
             <p>
-              {event.detail}
+              <Truncate lines={2} ellipsis={<span>...</span>}>
+                {event.detail}
+              </Truncate>
             </p>
           </Grid.Column>
           <Grid.Column width={3} floated='right' verticalAlign='bottom'>
