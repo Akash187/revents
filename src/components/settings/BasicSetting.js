@@ -118,7 +118,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     if(profile.isLoaded){
       return{
         name: profile.name || '',
-        gender: profile.gender || 'male',
+        gender: profile.gender || '',
         birthDate: profile.birthDate ? new Date(profile.birthDate.seconds * 1000) : '',
         address: profile.address ? profile.address : ''
       }
