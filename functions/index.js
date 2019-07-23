@@ -15,18 +15,18 @@ exports.eventCreated = functions.firestore
   .document('events/{eventId}')
   .onCreate((event, context) => {
     const eventId = context.params.eventId;
-    const tempEvent = event.data();
+    const newEvent = event.data();
     return admin.firestore()
       .collection('users')
-      .doc(tempEvent.createdBy)
+      .doc(newEvent.createdBy)
       .get()
       .then(user => {
         const tempUser = user.data();
         const notification = {
           content: 'New Event',
           eventId: eventId,
-          eventName: tempEvent.name,
-          userId: tempEvent.createdBy,
+          eventName: newEvent.name,
+          userId: newEvent.createdBy,
           userName: tempUser.name,
           image: tempUser.images ? tempUser.images[0] : '/assets/user.png',
           addedAt: admin.firestore.FieldValue.serverTimestamp()
@@ -38,38 +38,41 @@ exports.eventCreated = functions.firestore
 exports.updateEvent = functions.firestore
   .document('events/{eventId}')
   .onUpdate((change, context) => {
-    const tempEvent = change.after.data();
+    const newEvent = change.after.data();
+    const prevEvent = change.before.data();
     const eventId = context.params.eventId;
-    if(!tempEvent.active){
+    if(!newEvent.active){
       return admin.firestore()
         .collection('users')
-        .doc(tempEvent.createdBy)
+        .doc(newEvent.createdBy)
         .get()
         .then(user => {
           const tempUser = user.data();
           const notification = {
             content: 'Event Cancelled',
             eventId: eventId,
-            eventName: tempEvent.name,
-            userId: tempEvent.createdBy,
+            eventName: newEvent.name,
+            userId: newEvent.createdBy,
             userName: tempUser.name,
             image: tempUser.images ? tempUser.images[0] : '/assets/user.png',
             addedAt: admin.firestore.FieldValue.serverTimestamp()
           };
           return createNotification(notification);
         });
+    }else if(newEvent.attendeeList !== prevEvent.attendeeList || newEvent.comments !== prevEvent.comments){
+      return 'hello'
     }else{
       return admin.firestore()
         .collection('users')
-        .doc(tempEvent.createdBy)
+        .doc(newEvent.createdBy)
         .get()
         .then(user => {
           const tempUser = user.data();
           const notification = {
             content: 'Event Updated',
             eventId: eventId,
-            eventName: tempEvent.name,
-            userId: tempEvent.createdBy,
+            eventName: newEvent.name,
+            userId: newEvent.createdBy,
             userName: tempUser.name,
             image: tempUser.images ? tempUser.images[0] : '/assets/user.png',
             addedAt: admin.firestore.FieldValue.serverTimestamp()
