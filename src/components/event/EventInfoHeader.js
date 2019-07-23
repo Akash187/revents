@@ -9,12 +9,12 @@ const EventInfoHeader = ({event, uid, host, attendeeList, joinEvent, leaveEvent,
 
   return (
     <Card fluid>
-      <div className='eventInfo-head' style ={ { backgroundImage: `url('/assets/categoryImages/${event.about}.jpg')`} }>
+      <div className='eventInfo-head' style ={ { backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), ${`url('/assets/categoryImages/${event.about}.jpg')`}`}}>
         <Header
           inverted
           as = 'h1'
           content={event.name}
-          subheader= {moment(event.dateTime*1000).format('dddd Do MMMM')}/>
+          subheader= {moment(event.dateTime.toDate()).format('dddd Do MMMM')}/>
         <Header.Subheader
           content={`Hosted by ${host.name}`}
         />
