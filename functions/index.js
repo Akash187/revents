@@ -59,8 +59,10 @@ exports.updateEvent = functions.firestore
           };
           return createNotification(notification);
         });
-    }else if(newEvent.attendeeList !== prevEvent.attendeeList || newEvent.comments !== prevEvent.comments){
-      return 'hello'
+    }else if(checkAttendeeListUpdate(newEvent, prevEvent)){
+      console.log('attendeeList updated');
+    }else if(checkCommentsUpdate(newEvent, prevEvent)){
+      console.log('comments updated');
     }else{
       return admin.firestore()
         .collection('users')
@@ -81,3 +83,35 @@ exports.updateEvent = functions.firestore
         });
     }
   });
+
+const checkAttendeeListUpdate = (newEvent, prevEvent) => {
+  let prevAttendeeList = prevEvent.attendeeList;
+  let newAttendeeList = newEvent.attendeeList;
+  for(let attendee of prevAttendeeList){
+    if(!newAttendeeList.includes(attendee)){
+      return true;
+    }
+  }
+  for(let attendee of newAttendeeList){
+    if(!prevAttendeeList.includes(attendee)){
+      return true;
+    }
+  }
+  return false;
+};
+
+const checkCommentsUpdate = (newEvent, prevEvent) => {
+  let prevComments = prevEvent.comments;
+  let newComments = newEvent.comments;
+  for(let comment of prevComments){
+    if(!newComments.includes(comment)){
+      return true;
+    }
+  }
+  for(let comment of newComments){
+    if(!prevComments.includes(comment)){
+      return true;
+    }
+  }
+  return false;
+};

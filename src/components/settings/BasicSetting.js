@@ -135,8 +135,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withFormik({
     .max(100, 'Too Long!')
   }),
   handleSubmit(values, {props: {profile, basicProfile}}){
-    console.log(values.birthDate);
-    console.log(profile.birthDate);
+    console.log(values);
     if(values.name === profile.name && values.gender === profile.gender && values.address === profile.address){
       console.log('Not Submitting Form!');
     }else{
